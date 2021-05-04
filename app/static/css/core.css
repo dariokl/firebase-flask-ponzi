@@ -1,0 +1,120 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0 auto;
+  max-width: 480px;
+  width: 100%;
+  text-align: center;
+}
+
+.square-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.square {
+  position: relative;
+  flex-basis: calc(33.333% - 10px);
+  margin: 5px;
+  background: rgb(255, 215, 0);
+  box-sizing: border-box;
+}
+
+.square::before {
+  content: "?";
+  color: #b68d40;
+  display: block;
+  padding-top: 100%;
+}
+
+.square .content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.mobilebar-container {
+  position: relative;
+  top: 5px;
+  z-index: 12;
+  left: 60%;
+  transform: translateX(-55%);
+}
+
+.mobilebar-tab {
+  height: 50px;
+  max-width: 420px;
+  width: 90vw;
+  background-color: #fff;
+
+  display: flex;
+  position: relative;
+  flex-shrink: 0;
+  bottom: 0px;
+}
+
+.mobilebar-tab-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: calc(100% / 3);
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: 0.3s;
+  position: relative;
+  z-index: 2;
+}
+
+.mobilebar-tab-overlay {
+  border-radius: 6px;
+  background-color: #f0f0f0;
+  height: 100%;
+  width: calc(100% / 3);
+  position: absolute;
+  left: 0;
+  top: 0;
+  transition: 0.3s;
+}
+
+.mobilebar-tab__icon {
+  display: block;
+  color: #f96972;
+  transition-duration: 0.3s;
+  line-height: 1;
+}
+th {
+  background-color: #d3d3d3;
+}
+
+.clock,
+.coin,
+.chair,
+.share {
+  background: url("https://res.cloudinary.com/dqenlmcw2/image/upload/v1619545052/MegaPixelArt32x32pxIcons_SpriteSheet_isbek2.png")
+    no-repeat;
+}
+.clock {
+  background-position: -319px -200px;
+  width: 26px;
+  height: 26px;
+}
+.coin {
+  background-position: -37px 3px;
+  width: 21px;
+  height: 30px;
+}
+.chair {
+  background-position: -289px -8px;
+  width: 27px;
+  height: 15px;
+}
+.share {
+  background-position: -263px -201px;
+  width: 20px;
+  height: 15px;
+}

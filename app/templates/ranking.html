@@ -1,0 +1,71 @@
+{% extends 'header.html' %}
+{% block head %}
+<link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+<link href="https://unpkg.com/nes.css@latest/css/nes.min.css" rel="stylesheet">
+<link rel="stylesheet" href="/static/css/core.css">
+{% endblock %}
+{% block content %}
+<style>
+    th {
+
+        background-color: #d3d3d3;
+    }
+</style>
+
+<div class="nes-table-responsive" style="padding:10px;">
+    <table class="nes-table is-bordered is-centered" style="width:100%;overflow-x:auto;">
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Gain</th>
+
+
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>Joe</td>
+            <td>75% 👏</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Jane</td>
+            <td>-100% 👎</td>
+        </tr>
+
+
+    </table>
+</div>
+
+<script>
+    $(document).ready(function () {
+        firebase_config = {
+            "apiKey": "AIzaSyCulR0OlEN-dCRPxVsx16paDmbZef-x1gI",
+            "authDomain": "test-90b1b.firebaseapp.com",
+            "databaseURL": "https://test-90b1b-default-rtdb.europe-west1.firebasedatabase.app",
+            "projectId": "test-90b1b",
+            "storageBucket": "test-90b1b.appspot.com",
+            "messagingSenderId": "1085178731342",
+            "appId": "1:1085178731342:web:56a11a11b07b25916fdc1f"
+        }
+
+        firebase.initializeApp(firebase_config);
+
+        var rank = firebase.database().ref().child('game').child('players');
+        rank.orderByChild('position').on('value', snap => {
+            $('.nes-table').find('tr:gt(0)').remove()
+            snap.forEach(element => {
+                console.log(element.key, element.val())
+                if (element.val()['position'] != undefined) {
+                $('.nes-table tr:last').after("<tr><td>"
+                    + element.val()['position'] +
+                    "<td>" +
+                    element.val()['payment'] +
+                    "<td>" 
+                    + element.val()['earned'] +
+                    "</td></td></td></tr>")
+            }});
+        })
+    })
+</script>
+
+{% endblock %}

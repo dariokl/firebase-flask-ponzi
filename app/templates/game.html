@@ -1,0 +1,82 @@
+{% extends 'header.html' %} 
+{% block head %}
+<link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+<link href="https://unpkg.com/nes.css@latest/css/nes.min.css" rel="stylesheet">
+<link rel="stylesheet" href="/static/css/core.css">
+{% endblock %}
+{% block content %}
+
+<div class="mobilebar-container mobile-layout">
+<nav class="mobilebar-tab">
+
+
+        <div id="applicationBarMobileButton1" class="mobilebar-tab-item active">
+            <span class="nes-textarea mobilebar-tab__icon"> Invite
+                <i class="fa share"></i>
+            </span>
+        </div>
+
+        <div class="mobilebar-tab-item">
+            <span class="nes-textarea mobilebar-tab__icon"> Paid
+                <i class="fa coin"></i>
+            </span>
+        </div>
+      
+        <div class="mobilebar-tab-item">
+            <span class="mobilebar-tab__icon nes-textarea">10 in
+                <i class="fas chair"></i>
+            </span>
+        </div>
+
+        <div class="mobilebar-tab-overlay"></div>
+    </nav>
+</div>
+.
+<!--:-->
+<div class="square-container">
+
+  <div class="square nes-textarea">
+    <div class="content">
+    </div>
+  </div>
+
+  <div class="square nes-textarea">
+    <div class="content spread">
+    </div>
+  </div>
+
+  <div class="square nes-textarea"> 
+    <div class="content column">
+    </div>
+  </div>
+
+
+</div>
+<h1 >00:01</h1>
+{{counter}}  - {{number}} {{messagess}}
+<!--Make sure the form has the autocomplete function switched off:-->
+<form method='POST'>
+  {{ form.csrf_token }}
+  <div>
+    {{form.guess(class='nes-input', pattern="[0-9]*", inputmode='numeric', placeholder='Guess')}}
+  </div>
+  <input class="nes-btn is-primary is-centered" type="submit" value="Try!" style="width:35%">
+</form>
+
+
+<div class="nes-table-responsive" style="padding:10px;">
+  <table class="nes-table is-bordered is-centered" style="width:100%;overflow-x:auto;">
+    {% for message, guess in notification %}
+    <tr>
+      <th>{{guess}}</th>
+      <th>{{message}}</th>
+    </tr>
+    {% endfor %}
+    
+  </table>
+</div>
+  
+
+
+{% endblock %}
+

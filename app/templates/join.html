@@ -1,0 +1,105 @@
+{% extends 'header.html' %} {% block content %}
+{% block head %}
+<link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+<link href="https://unpkg.com/nes.css@latest/css/nes.min.css" rel="stylesheet">
+<link rel="stylesheet" href="/static/css/core.css">
+{% endblock %}
+<style>
+  .center-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 100vh;
+  }
+
+  .center-screen2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 100vh;
+  }
+</style>
+<div class="center-screen">
+  <div>
+    <p>Current Lobby Status</p>
+    <p> <span id='playerCounter'></span>:/10 Players</p>
+  </div>
+  <form id='joinForm'>
+    <div>
+    <input id='email' type='email' placeholder='Enter Your Email' required />
+  </div>
+  <div>
+    <button type='submit'> Join Game </button>
+  </div>
+  </form>
+</div>
+<div class="center-screen2">
+  <div>
+    <p>Are you ready? </p>
+    <input id='readyCounter' hidden/>
+
+  </div>
+  <button id='ready'> Join Game </button>
+
+</div>
+<script type="text/javascript" charset="utf-8">
+  var config;
+  $(document).ready(function () {
+    firebase_config = {
+      "apiKey": "AIzaSyCulR0OlEN-dCRPxVsx16paDmbZef-x1gI",
+      "authDomain": "test-90b1b.firebaseapp.com",
+      "databaseURL": "https://test-90b1b-default-rtdb.europe-west1.firebasedatabase.app",
+      "projectId": "test-90b1b",
+      "storageBucket": "test-90b1b.appspot.com",
+      "messagingSenderId": "1085178731342",
+      "appId": "1:1085178731342:web:56a11a11b07b25916fdc1f"
+    }
+    // Hiding the ready part of page
+    $('.center-screen2').hide()
+    
+
+    firebase.initializeApp(firebase_config);
+    var dbTotalPlayers = firebase.database().ref().child('game').child('total_players');
+    var dbReady = firebase.database().ref().child('game').child('ready');
+    dbTotalPlayers.on('value', snap => $('#playerCounter').text(snap.val()))
+    dbReady.on('value', snap => $('#readyCounter').val(snap.val()))
+
+    $('#joinForm').submit(function (e) {
+      // Adding up one total player into firebase
+      var current_players = parseInt($('#playerCounter').text());
+      firebase.database().ref().child('game').update({ 'total_players': current_players + 1 });
+      // Using ajax to store users email into cookie
+      $.ajax({
+        method: 'POST',
+        url: '/register',
+        xhrFields: { withCredentials: true },
+        contentType: 'application/json;charset=UTF-8',
+        data: JSON.stringify({ 'email': $('#email').val() })
+      }).then((response) => {
+        // Removing the email input and showing ready button
+        $('.center-screen').fadeOut()
+        $('.center-screen2').show()
+      });
+      e.preventDefault();
+    })
+
+    // Using ready button to confirm that players are ready to start playing
+    $('#ready').on('click', function (e) {
+      var ready = parseInt($('#readyCounter').val())
+      firebase.database().ref().child('game').update({ 'ready': ready + 1 })
+      $(this).fadeOut()
+      e.preventDefault()
+    })
+
+    dbReady.on('value', snap => {
+      if (snap.val() == 3) {
+        window.location.href = '/ponzi'
+      }
+    })
+  });
+</script>
+{% endblock %}
