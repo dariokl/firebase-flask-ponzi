@@ -1,4 +1,7 @@
 {% extends 'header.html' %}
+{% block head %}
+<link rel="stylesheet" href="/static/css/core.css">
+{% endblock %}
 {% block content %}
 <style>
 	html {
@@ -50,11 +53,11 @@
 		background-color: var(--lgtr-blue);
 	}
 </style>
-
 <div class="box">
-	<div><button type="button">
+	{% for game in games %}
+	<div><a href="{{url_for('ponzi.join', room_key=game.key() )}}"><button type="button">
 			<span>Ponzi Room</span>
-		</button></div>
+		</button></a></div>
+	{% endfor %}
 </div>
-
 {% endblock %}

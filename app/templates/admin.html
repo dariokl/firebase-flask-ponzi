@@ -1,0 +1,39 @@
+{% extends 'header.html' %} 
+{% block content %}
+{% block head %}
+<link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+<link href="https://unpkg.com/nes.css@latest/css/nes.min.css" rel="stylesheet">
+<link rel="stylesheet" href="/static/css/core.css">
+{% endblock %}
+<style>
+  .center-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 100vh;
+  }
+</style>
+
+<div class="center-screen">
+  <div>
+    <p>Create New Lobby</p>
+
+  </div>
+  <form method='POST'>
+      {{ form.csrf_token}}
+    <div>
+    {{form.allowed_players.label}}
+    {{form.allowed_players()}}
+  </div>
+  <div>
+    {{form.guesses.label}}
+    {{form.guesses()}}
+  </div>
+  <div>
+    <button type='submit'> Create Game </button>
+  </div>
+  </form>
+</div>
+{% endblock %}

@@ -18,6 +18,7 @@
             <th>#</th>
             <th>Name</th>
             <th>Gain</th>
+            <th>End Time</th>
 
 
         </tr>
@@ -37,20 +38,16 @@
 </div>
 
 <script>
+    var room_key = {{room_key|tojson}}
     $(document).ready(function () {
-        firebase_config = {
-            "apiKey": "AIzaSyCulR0OlEN-dCRPxVsx16paDmbZef-x1gI",
-            "authDomain": "test-90b1b.firebaseapp.com",
-            "databaseURL": "https://test-90b1b-default-rtdb.europe-west1.firebasedatabase.app",
-            "projectId": "test-90b1b",
-            "storageBucket": "test-90b1b.appspot.com",
-            "messagingSenderId": "1085178731342",
-            "appId": "1:1085178731342:web:56a11a11b07b25916fdc1f"
+        // LEAVE THE CONFIG HERE
+        var firebase_config = {
+
         }
 
         firebase.initializeApp(firebase_config);
 
-        var rank = firebase.database().ref().child('game').child('players');
+        var rank = firebase.database().ref().child('game').child(room_key).child('players');
         rank.orderByChild('position').on('value', snap => {
             $('.nes-table').find('tr:gt(0)').remove()
             snap.forEach(element => {
@@ -61,8 +58,10 @@
                     "<td>" +
                     element.val()['payment'] +
                     "<td>" 
-                    + element.val()['earned'] +
-                    "</td></td></td></tr>")
+                    + element.val()['gain'] +
+                    "<td>"
+                    + element.val()['end_time'] + 
+                    "</td></td></td></td></tr>")
             }});
         })
     })

@@ -3,3 +3,4 @@ __pycache__/
 venv_ponzi
 .env
 .vscode/
+db.json
