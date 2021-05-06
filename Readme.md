@@ -54,6 +54,16 @@ Once you did that go to firebase console on the web page , find database and the
 That should be enough for app to start and now there is only one thing left. The /admin view is not on the  index page you have to go to it manually so in order to create a new game room please go for localhost:5000/admin. There will be form presisted and once submited it will create a new lobby wich will be shown once you refresh to index page ( localhost:5000/ ).
 
 
+---
+
+In order to run the application activate the virtual env and type following commands in terminal.
+
+```
+export FLASK_APP=run.py
+flask run
+```
+If you are using windows just use set instead of export.
+
 
 
 
