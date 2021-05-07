@@ -108,9 +108,9 @@ def ponzi():
         for index in range(3):
             if guess[index] == number_to_guess[index]:
                 clues.append('Killed')
-            elif guess[index] in number_to_guess[index]:
+            elif guess[index] in number_to_guess:
                 clues.append('Wounded')
-
+        
         # counting killed-injured function
         if len(clues) == 0:
             session['messages'].append('Nothing')
@@ -118,7 +118,7 @@ def ponzi():
             killed = countX(clues, "Killed"), 'Killed'
             wounded = countX(clues, "Wounded"), 'Wounded'
             session['messages'].append(
-                f'There are {killed[0]} {killed[1]}, {wounded[0]} {wounded[1]}')
+                f'There are {killed[0]} Killed, {wounded[0]} Wounded')
 
         if guess == number_to_guess:
             crud_user.end_timer(db, time.time())

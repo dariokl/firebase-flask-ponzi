@@ -4,6 +4,7 @@ import pyrebase
 # Configuration goes here !!!
 firebase_config = {
 
+
 }
 
 
@@ -11,7 +12,6 @@ player = {
     'earned': 0,
     'start_time': 0,
     'end_time': None,
-    'id' : '',
     'investment': "100",
     "payment": '',
     "position": None,

@@ -70,7 +70,7 @@ class User():
                     db.child('game').child(self.room_key).child('players').child(player.key()).update({'position': position})
                     self.distribute_gain(db, player.key(), position)
                     position += 1
-            except KeyError:
+            except TypeError:
                 pass
     
     def distribute_gain(self, db, player_key, position):
