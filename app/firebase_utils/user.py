@@ -15,7 +15,6 @@ class User():
     # Creating new user
     def create_new_user(self, db, email, room_key):
         allowed_players = db.child('game').child(room_key).child("allowed_players").get()
-        print(room_key)
         if email and allowed_players.val() != 0:
             player['payment'] = email
             db.child('game').child(room_key).child('players').update({allowed_players.val(): player})
@@ -54,24 +53,28 @@ class User():
         start_timer = db.child('game').child(self.room_key).child('players').child(user_key).get()
         db.child('game').child(self.room_key).child('players').child(user_key).update({"end_time": int(time - start_timer.val()['start_time'])})
 
+
     def set_position(self, db):
         # Return firebase object oredered by end_time property.
-        timed_result = db.child('game').child(self.room_key).child('players').order_by_child('end_time').get()
+        player_keys = db.child('game').child(self.room_key).child('players').shallow().get()
         gain = db.child('game').child(self.room_key).child('distribution').get()
 
-        # Each time a player finish the game the final result will be updated based on timed_result query
-        # Looping over every player and chanign the position based on new results in database.
+        # Stroing every users key and time into a tumple
+        results_list = []
+        for keys in player_keys.val():
+            player = db.child('game').child(self.room_key).child('players').child(keys).get().val()
+            # This is just a value inside the loop its not stored in firebase 
+            tup = keys, player.get('end_time', 9999999999999999999999999999999)
+            results_list.append(tup)
+
+        # Sorting a list by end time.
+        sorted_by_time = sorted(results_list, key=lambda tup: tup[1])
+
         position = 1
-        for player in timed_result.each():
-            end_time =  db.child('game').child(self.room_key).child('players').child(player.key()).get()
-            try:
-                # Check if the player has ended his game.
-                if end_time.val()['end_time']:
-                    db.child('game').child(self.room_key).child('players').child(player.key()).update({'position': position})
-                    self.distribute_gain(db, player.key(), position)
-                    position += 1
-            except TypeError:
-                pass
+        for player in sorted_by_time:
+            db.child('game').child(self.room_key).child('players').child(player[0]).update({'position': position})
+            self.distribute_gain(db, player[0], position)
+            position += 1
     
     def distribute_gain(self, db, player_key, position):
         distribution = db.child('game').child(self.room_key).child('distribution').get()

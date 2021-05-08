@@ -21,7 +21,7 @@ def admin():
         'ready': 0,
         'distribution': {1: 0.75, 2: 0.50, 3: 0.25, 4: 0, 5: -1},
         'secret': '',
-        'guesses': 0
+        'guesses': 0,
     }
 
     form = GameForm()
@@ -122,7 +122,6 @@ def ponzi():
 
         if guess == number_to_guess:
             crud_user.end_timer(db, time.time())
-            crud_user.set_position(db)
             session['messages'].append('You got it !')
             return redirect(url_for('ponzi.rank', room_key=session['room_key']))
         
@@ -158,5 +157,6 @@ def register():
 
 @view.route('/rank/<room_key>')
 def rank(room_key):
+    crud_user.set_position(db)
 
     return render_template('ranking.html', room_key=room_key)
