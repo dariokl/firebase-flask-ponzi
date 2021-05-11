@@ -1,6 +1,8 @@
 {% extends 'header.html' %}
 {% block head %}
 <link rel="stylesheet" href="/static/css/core.css">
+<link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+<link href="https://unpkg.com/nes.css@latest/css/nes.min.css" rel="stylesheet">
 {% endblock %}
 {% block content %}
 <style>
@@ -23,41 +25,107 @@
 		flex: 1 1 80px;
 	}
 
-	button {
-		display: block;
-		padding: 10px 38px;
-		font-weight: bold;
-		font-size: 16px;
-		text-align: center;
-		color: var(--blue);
-		background-color: #fff;
-		border: 2px solid var(--blue);
-		border-radius: 24px;
-		cursor: pointer;
-		transition: all 0.3s ease;
+	* {
+		box-sizing: border-box;
+	}
+
+	body {
+		margin: 0 auto;
+		max-width: 480px;
 		width: 100%;
+		text-align: center;
 	}
 
-	button:hover {
-		color: var(--lgt-blue);
-		border-color: var(--lgt-blue);
+	.nes-container {
+		top: 10px;
+
 	}
 
-	button:active {
-		color: var(--drk-blue);
-		border-color: var(--drk-blue);
+	.nes-badge {
+		right: 45%;
+
 	}
 
-	button:focus {
-		outline: none;
-		background-color: var(--lgtr-blue);
+	.nes-btn {
+		left: 10%;
+
 	}
 </style>
-<div class="box">
-	{% for game in games %}
-	<div><a href="{{url_for('ponzi.join', room_key=game.key() )}}"><button type="button">
-			<span>Ponzi Room</span>
-		</button></a></div>
-	{% endfor %}
+{% for game in games %}
+
+{% if game.val().game_type == 'Ponzi' %}
+<div class="nes-container is-rounded">
+	<img src="https://ipfs.io/ipfs/QmRZBaB5A9WJhkHYR6sNK3jNj3sy4N6rQHhWyK3K8DNrku?filename=pxArt.png" />
+	<h2>Ponzi Room</h2>
+	<p>High Risk. High Reward</p>
+
+	<a  class="nes-badge"> <span class="is-primary">OPEN</span>
+	</a>
+	<a href="{{url_for('ponzi.join', room_key=game.key())}}"
+	<button class="nes-btn" style="
+	  --ns-bg-color: hsl(323,71%,86%);
+	  --ns-shadow-color:hsl(323,71%,76%);
+	  --ns-border:8px;
+	  --ns-border-color:#51352f;
+		color:hsl(323,71%,70%);                               ">Enter</button>
+		</a>
+
 </div>
+
+{% elif game.val().game_type == 'Ignatova' %}
+
+<div class="nes-container is-rounded">
+	<img src="https://ipfs.io/ipfs/QmYzyGv9PQZtPExcKtQEGUg9MmLVEGcZrSqbWmo5v9wFoT?filename=ignatova_low.png" />
+	<h2>Ignatova Room</h2>
+	<p>Low Risk. Low Reward</p>
+
+	<a href="#" class="nes-badge"> <span class="is-primary">OPEN</span>
+	</a>
+	<button class="nes-btn" style="
+	  --ns-bg-color: hsl(323,71%,86%);
+	  --ns-shadow-color:hsl(323,71%,76%);
+	  --ns-border:8px;
+	  --ns-border-color:#51352f;
+									 color:hsl(323,71%,70%);                               ">Enter</button>
+
+</div>
+
+{% elif game.val().game_type == 'Maddof' %}
+
+<div class="nes-container is-rounded">
+	<img class="madoff" src="https://ipfs.io/ipfs/QmYhpjQbb1tLfLoW1mDskkGwQRkf2E1rgT4hbh6Jj1uRhh?filename=madoff.png" />
+	<h2>Madoff Room</h2>
+	<p>High Risk. Medium Reward</p>
+
+	<a href="#" class="nes-badge is-error"> <span class="is-error">CLOSED</span>
+	</a>
+	<button class="nes-btn is-disabled" style="
+	  --ns-bg-color: hsl(323,71%,86%);
+	  --ns-shadow-color:hsl(323,71%,76%);
+	  --ns-border:8px;
+	  --ns-border-color:#51352f;
+									 color:hsl(323,71%,70%);                               ">Enter</button>
+
+</div>
+
+{% elif game.val().game_type == 'Rossem' %}
+
+<div class="nes-container is-rounded">
+	<img class="madoff"
+		src="https://ipfs.io/ipfs/QmfG3qP5MQD78uGHQzn9F5SfHDz3A978hcNdukxoL3PREy?filename=vanrossem.png" />
+	<h2>Van Rossem Room</h2>
+	<p>Medium Risk. Medium Reward</p>
+
+	<a href="#" class="nes-badge is-error"> <span class="is-warning">ONGOING</span>
+	</a>
+	<button class="nes-btn is-disabled" style="
+	  --ns-bg-color: hsl(323,71%,86%);
+	  --ns-shadow-color:hsl(323,71%,76%);
+	  --ns-border:8px;
+	  --ns-border-color:#51352f;
+		color:hsl(323,71%,70%);                               ">Enter</button>
+
+</div>
+{% endif %}
+{% endfor %}
 {% endblock %}

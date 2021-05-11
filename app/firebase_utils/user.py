@@ -13,10 +13,11 @@ class User():
 
 
     # Creating new user
-    def create_new_user(self, db, email, room_key):
+    def create_new_user(self, db, email, name, room_key):
         allowed_players = db.child('game').child(room_key).child("allowed_players").get()
         if email and allowed_players.val() != 0:
             player['payment'] = email
+            player['name'] = name
             db.child('game').child(room_key).child('players').update({allowed_players.val(): player})
             db.child('game').child(room_key).update({'allowed_players': allowed_players.val() - 1})
             return True

@@ -15,31 +15,23 @@ from ..firebase_utils.db import db
 @view.route('/admin', methods=['POST', 'GET'])
 def admin():
     data = {
+        'game_type': '',
         'allowed_players': 10,
         'players': "{}",
         'total_players': 0,
         'ready': 0,
         'distribution': {1: 0.75, 2: 0.50, 3: 0.25, 4: 0, 5: -1},
-        'secret': '',
         'guesses': 0,
     }
 
     form = GameForm()
-    hashids = Hashids()
-
-    # The secret number generation.
-    letters = sample('0123456789', 3)
-
-    if letters[0] == '0':
-        letters.reverse()
-
-    number = ''.join(letters)
-
+  
     if request.method == 'POST' and form.validate_on_submit():
         # Editing the game data object.
+        data['game_type'] = form.game_type.data
         data['allowed_players'] = form.allowed_players.data
+        data['max_players'] = form.allowed_players.data
         data['guesses'] = form.guesses.data
-        data['secret'] = hashids.encode(int(number))
 
         # We can add separate class from Games instead of using User class, for now its obsolete.
         crud_user.create_new_game(db, data)
@@ -78,9 +70,7 @@ def ponzi():
 
     # Decoding the secret number inside the game.
     hashids = Hashids()
-    number_to_guess = db.child('game').child(
-        session['room_key']).child('secret').get().val()
-    number_to_guess = ''.join(map(str, hashids.decode(number_to_guess)))
+    number_to_guess = session['number']
 
     def has_doubles(n):
         return len(set(str(n))) < len(str(n))
@@ -137,20 +127,29 @@ def ponzi():
 @view.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        user = request.get_json()['email']
+        user_email = request.get_json()['email']
+        player_name = request.get_json()['name']
         room_key = request.get_json()['room_key']
         # All session object needed for proper functionality while playing the guess game.
         session['room_key'] = room_key
-        session['email'] = user
+        session['email'] = user_email
         session['guesses'] = db.child('game').child(
             room_key).child('guesses').get().val()
         session['messages'] = []
         session['guess'] = []
 
         # Add user to game if he is not registered already.
-        current_user = crud_user.current_user(db, user, room_key)
+        current_user = crud_user.current_user(db, user_email, room_key)
         if not current_user:
-            crud_user.create_new_user(db, user, room_key)
+            crud_user.create_new_user(db, user_email, player_name , room_key)
+        
+        letters = sample('0123456789', 3)
+
+        if letters[0] == '0':
+            letters.reverse()
+
+        number = ''.join(letters)
+        session['number'] = number
 
         return jsonify({'Message': 'Session intialized'})
 

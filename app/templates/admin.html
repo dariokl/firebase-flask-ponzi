@@ -32,7 +32,11 @@
     {{form.guesses()}}
   </div>
   <div>
-    <button type='submit'> Create Game </button>
+    {{form.game_type.label}}
+    {{form.game_type()}}
+  </div>
+  <div>
+    <button type='submit' style='margin-top: 1rem;'> Create Game </button>
   </div>
   </form>
 </div>

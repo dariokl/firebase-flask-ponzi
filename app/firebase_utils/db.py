@@ -16,6 +16,7 @@ player = {
     'end_time': None,
     'investment': "100",
     "payment": '',
+    "name": '',
     "position": None,
 }
 

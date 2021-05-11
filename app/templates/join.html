@@ -5,115 +5,446 @@
 <link rel="stylesheet" href="/static/css/core.css">
 {% endblock %}
 <style>
-  .center-screen {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    min-height: 100vh;
-  }
+	* {
+		box-sizing: border-box;
+	}
 
-  .center-screen2 {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    min-height: 100vh;
-  }
+	body {
+		margin: 0 auto;
+		max-width: 480px;
+		width: 100%;
+		text-align: center;
+		display: flex;
+		flex-wrap: wrap;
+		overflow: auto;
+		padding: 1em;
+
+
+	}
+
+	.nes-container {
+		position: relative;
+		flex: 0 1 auto;
+		padding: 1em;
+		margin-bottom: 40px;
+
+
+
+
+	}
+
+	.comment {
+		font-size: 12px;
+
+	}
+
+
+	.drop1,
+	.drop2 {
+		-webkit-animation: blink 1.5s ease-out 0s infinite;
+		-moz-animation: blink 1.5s ease-out 0s infinite;
+		-ms-animation: blink 1.5s ease-out 0s infinite;
+		-o-animation: blink 1.5s ease-out 0s infinite;
+	}
+
+	.drop2 {
+		animation-delay: .1s;
+	}
+
+	@-webkit-keyframes blink {
+		0% {
+			opacity: 1;
+		}
+
+		100% {
+			opacity: 0;
+		}
+	}
+
+	@-moz-keyframes blink {
+		0% {
+			opacity: 1;
+		}
+
+		100% {
+			opacity: 0;
+		}
+	}
+
+	@-o-keyframes blink {
+		0% {
+			opacity: 1;
+		}
+
+		100% {
+			opacity: 0;
+		}
+	}
+
+
 </style>
-<div class="center-screen">
-  <div>
-    <p>Current Lobby Status</p>
-    <p> <span id='playerCounter'></span>:/<span id='maxPlayers'></span> Players</p>
-    <p><span id='totalGuesses'></span></p>
-  </div>
-  <form id='joinForm'>
-    <div>
-    <input id='email' type='email' placeholder='Enter Your Email' required />
-  </div>
-  <div>
-    <button type='submit'> Join Game </button>
-  </div>
-  </form>
-</div>
-<div class="center-screen2">
-  <div>
-    <p>Are you ready? </p>
-    <input id='readyCounter' hidden/>
+<div class="nes-container is-rounded is-first-step">
 
-  </div>
-  <button id='ready'> Join Game </button>
 
+	<p class="comment">Please enter your name and email adress to grant access to the room.</p>
+
+	<form id='joinForm'>
+		<div>
+			<input id='email' type='email' placeholder='Enter Your Email' style='margin-bottom: 1rem;' required />
+			<input id='playerName' type='text' placeholder='Enter your Name' required />
+		</div>
+		<div>
+			<button class="nes-btn is-primary">Requests Access</button>
+		</div>
+	</form>
 </div>
+
+
+<div class="nes-container is-rounded is-second-step">
+
+	<h2>Waiting....</h2>
+	</br>
+	<svg class="animation" version="1.1" x="0px" y="0px" width="162px" height="198px" viewBox="0 0 162 198"
+		enable-background="new 0 0 162 198" xml:space="preserve">
+
+		<g id="XMLID_15_">
+			<g id="XMLID_16_">
+				<rect id="XMLID_448_" x="144" y="36" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_447_" x="135" y="45" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_446_" x="135" y="54" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_445_" x="135" y="63" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_444_" x="126" y="72" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_443_" x="126" y="81" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_442_" x="126" y="90" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_441_" x="117" y="99" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_440_" x="117" y="108" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_439_" x="117" y="117" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_438_" x="108" y="126" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_437_" x="108" y="135" fill="#FF3E00" width="9" height="9" />
+				<rect id="XMLID_436_" x="108" y="144" fill="#FF3E00" width="9" height="9" />
+				<rect id="XMLID_435_" x="99" y="153" fill="#FF3E00" width="9" height="9" />
+				<rect id="XMLID_434_" x="99" y="162" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_433_" x="99" y="171" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_432_" x="90" y="171" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_423_" x="90" y="162" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_422_" x="81" y="171" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_415_" x="81" y="162" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_412_" x="90" y="153" fill="#FF3E00" width="9" height="9" />
+				<rect id="XMLID_411_" x="81" y="153" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_213_" x="99" y="144" fill="#D01100" width="9" height="9" />
+				<rect id="XMLID_212_" x="90" y="144" fill="#FF3E00" width="9" height="9" />
+				<rect id="XMLID_211_" x="81" y="144" fill="#FF3E00" width="9" height="9" />
+				<rect id="XMLID_210_" x="72" y="162" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_209_" class="drop1" x="90" y="180" fill="#FBB03B" width="9" height="9" />
+				<rect id="XMLID_208_" class="drop2" x="90" y="189" fill="#F7931E" width="9" height="9" />
+				<rect id="XMLID_207_" x="72" y="153" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_206_" x="72" y="144" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_205_" x="99" y="135" fill="#FF3E00" width="9" height="9" />
+				<rect id="XMLID_204_" x="90" y="135" fill="#FF3E00" width="9" height="9" />
+				<rect id="XMLID_203_" x="81" y="135" fill="#FF3E00" width="9" height="9" />
+				<rect id="XMLID_202_" x="72" y="135" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_201_" x="99" y="126" fill="#FF3E00" width="9" height="9" />
+				<rect id="XMLID_200_" x="90" y="126" fill="#D01100" width="9" height="9" />
+				<rect id="XMLID_199_" x="81" y="126" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_198_" x="72" y="126" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_197_" x="63" y="144" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_196_" class="drop1" x="45" y="135" fill="#F7931E" width="9" height="9" />
+				<rect id="XMLID_195_" class="drop2" x="45" y="144" fill="#F7931E" width="9" height="9" />
+				<rect id="XMLID_194_" x="45" y="117" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_193_" x="45" y="126" fill="#FBB03B" width="9" height="9" />
+				<rect id="XMLID_192_" class="drop1" x="27" y="90" fill="#F7931E" width="9" height="9" />
+				<rect id="XMLID_191_" class="drop2" x="27" y="99" fill="#F7931E" width="9" height="9" />
+				<rect id="XMLID_190_" x="27" y="81" fill="#FBB03B" width="9" height="9" />
+				<rect id="XMLID_189_" x="63" y="135" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_188_" x="63" y="126" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_187_" x="108" y="117" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_186_" x="99" y="117" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_185_" x="90" y="117" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_184_" x="81" y="117" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_183_" x="72" y="117" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_182_" x="63" y="117" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_181_" x="108" y="108" fill="#F7931E" width="9" height="9" />
+				<rect id="XMLID_180_" x="99" y="108" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_179_" x="90" y="108" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_178_" x="81" y="108" fill="#FF3E00" width="9" height="9" />
+				<rect id="XMLID_177_" x="72" y="108" fill="#FF3E00" width="9" height="9" />
+				<rect id="XMLID_176_" x="63" y="108" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_175_" x="54" y="126" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_174_" x="54" y="117" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_173_" x="54" y="108" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_172_" x="108" y="99" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_171_" x="99" y="99" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_170_" x="90" y="99" fill="#FF3E00" width="9" height="9" />
+				<rect id="XMLID_169_" x="81" y="99" fill="#D01100" width="9" height="9" />
+				<rect id="XMLID_168_" x="72" y="99" fill="#FF3E00" width="9" height="9" />
+				<rect id="XMLID_167_" x="63" y="99" fill="#FF3E00" width="9" height="9" />
+				<rect id="XMLID_166_" x="54" y="99" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_165_" x="117" y="90" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_164_" x="108" y="90" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_163_" x="99" y="90" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_162_" x="90" y="90" fill="#FF3E00" width="9" height="9" />
+				<rect id="XMLID_161_" x="81" y="90" fill="#FF3E00" width="9" height="9" />
+				<rect id="XMLID_160_" x="72" y="90" fill="#FF3E00" width="9" height="9" />
+				<rect id="XMLID_159_" x="63" y="90" fill="#D01100" width="9" height="9" />
+				<rect id="XMLID_158_" x="54" y="90" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_157_" x="45" y="108" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_156_" x="45" y="99" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_155_" x="45" y="90" fill="#F7931E" width="9" height="9" />
+				<rect id="XMLID_154_" x="117" y="81" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_153_" x="108" y="81" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_152_" x="99" y="81" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_151_" x="90" y="81" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_150_" x="81" y="81" fill="#FF3E00" width="9" height="9" />
+				<rect id="XMLID_149_" x="72" y="81" fill="#FF3E00" width="9" height="9" />
+				<rect id="XMLID_148_" x="63" y="81" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_147_" x="54" y="81" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_146_" x="45" y="81" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_145_" x="117" y="72" fill="#FF3E00" width="9" height="9" />
+				<rect id="XMLID_144_" x="108" y="72" fill="#FF3E00" width="9" height="9" />
+				<rect id="XMLID_143_" x="99" y="72" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_142_" x="90" y="72" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_141_" x="81" y="72" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_140_" x="72" y="72" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_139_" x="63" y="72" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_138_" x="54" y="72" fill="#FF3E00" width="9" height="9" />
+				<rect id="XMLID_137_" x="45" y="72" fill="#FF3E00" width="9" height="9" />
+				<rect id="XMLID_136_" x="36" y="90" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_135_" x="36" y="81" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_134_" x="36" y="72" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_133_" x="126" y="63" fill="#FF3E00" width="9" height="9" />
+				<rect id="XMLID_132_" x="117" y="63" fill="#D01100" width="9" height="9" />
+				<rect id="XMLID_131_" x="108" y="63" fill="#FF3E00" width="9" height="9" />
+				<rect id="XMLID_130_" x="99" y="63" fill="#FF3E00" width="9" height="9" />
+				<rect id="XMLID_129_" x="90" y="63" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_128_" x="81" y="63" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_127_" x="72" y="63" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_126_" x="63" y="63" fill="#FF3E00" width="9" height="9" />
+				<rect id="XMLID_125_" x="54" y="63" fill="#FF3E00" width="9" height="9" />
+				<rect id="XMLID_124_" x="45" y="63" fill="#D01100" width="9" height="9" />
+				<rect id="XMLID_123_" x="36" y="63" fill="#FF3E00" width="9" height="9" />
+				<rect id="XMLID_122_" x="126" y="54" fill="#FF3E00" width="9" height="9" />
+				<rect id="XMLID_121_" x="117" y="54" fill="#FF3E00" width="9" height="9" />
+				<rect id="XMLID_120_" x="108" y="54" fill="#D01100" width="9" height="9" />
+				<rect id="XMLID_119_" x="99" y="54" fill="#FF3E00" width="9" height="9" />
+				<rect id="XMLID_118_" x="90" y="54" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_117_" x="81" y="54" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_116_" x="72" y="54" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_115_" x="63" y="54" fill="#FF3E00" width="9" height="9" />
+				<rect id="XMLID_114_" x="54" y="54" fill="#D01100" width="9" height="9" />
+				<rect id="XMLID_113_" x="45" y="54" fill="#FF3E00" width="9" height="9" />
+				<rect id="XMLID_112_" x="36" y="54" fill="#FF3E00" width="9" height="9" />
+				<rect id="XMLID_111_" x="27" y="72" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_110_" x="27" y="63" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_109_" x="27" y="54" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_108_" x="18" y="54" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_107_" x="126" y="45" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_106_" x="117" y="45" fill="#FF3E00" width="9" height="9" />
+				<rect id="XMLID_105_" x="108" y="45" fill="#FF3E00" width="9" height="9" />
+				<rect id="XMLID_104_" x="99" y="45" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_103_" x="90" y="45" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_102_" x="81" y="45" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_101_" x="72" y="45" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_100_" x="63" y="45" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_99_" x="54" y="45" fill="#FF3E00" width="9" height="9" />
+				<rect id="XMLID_98_" x="45" y="45" fill="#FF3E00" width="9" height="9" />
+				<rect id="XMLID_97_" x="36" y="45" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_96_" x="27" y="45" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_95_" x="18" y="45" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_94_" x="135" y="36" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_93_" x="126" y="36" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_92_" x="117" y="36" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_91_" x="108" y="36" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_90_" x="99" y="36" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_89_" x="90" y="36" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_88_" x="81" y="36" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_87_" x="72" y="36" fill="#F7931E" width="9" height="9" />
+				<rect id="XMLID_86_" x="63" y="36" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_85_" x="126" y="27" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_84_" x="117" y="27" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_83_" x="108" y="27" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_82_" x="99" y="27" fill="#F7931E" width="9" height="9" />
+				<rect id="XMLID_81_" x="90" y="27" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_80_" x="81" y="27" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_79_" x="72" y="27" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_78_" x="63" y="27" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_77_" x="54" y="36" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_76_" x="45" y="36" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_75_" x="36" y="36" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_74_" x="27" y="36" fill="#FFC600" width="9" height="9" />
+				<rect id="XMLID_73_" x="144" y="18" fill="#754C24" width="9" height="9" />
+				<rect id="XMLID_72_" x="153" y="18" fill="#8C6239" width="9" height="9" />
+				<rect id="XMLID_71_" x="135" y="18" fill="#754C24" width="9" height="9" />
+				<rect id="XMLID_70_" x="144" y="27" fill="#754C24" width="9" height="9" />
+				<rect id="XMLID_69_" x="135" y="27" fill="#754C24" width="9" height="9" />
+				<rect id="XMLID_68_" x="126" y="9" fill="#754C24" width="9" height="9" />
+				<rect id="XMLID_67_" x="117" y="9" fill="#754C24" width="9" height="9" />
+				<rect id="XMLID_63_" x="108" y="9" fill="#754C24" width="9" height="9" />
+				<rect id="XMLID_62_" x="99" y="9" fill="#754C24" width="9" height="9" />
+				<rect id="XMLID_60_" x="90" y="9" fill="#754C24" width="9" height="9" />
+				<rect id="XMLID_59_" x="81" y="9" fill="#754C24" width="9" height="9" />
+				<rect id="XMLID_58_" x="72" y="18" fill="#754C24" width="9" height="9" />
+				<rect id="XMLID_57_" x="63" y="18" fill="#754C24" width="9" height="9" />
+				<rect id="XMLID_56_" x="72" y="9" fill="#754C24" width="9" height="9" />
+				<rect id="XMLID_55_" x="63" y="9" fill="#754C24" width="9" height="9" />
+				<rect id="XMLID_54_" x="54" y="18" fill="#754C24" width="9" height="9" />
+				<rect id="XMLID_53_" x="45" y="18" fill="#754C24" width="9" height="9" />
+				<rect id="XMLID_52_" x="36" y="18" fill="#754C24" width="9" height="9" />
+				<rect id="XMLID_51_" x="27" y="18" fill="#754C24" width="9" height="9" />
+				<rect id="XMLID_50_" x="27" y="27" fill="#754C24" width="9" height="9" />
+				<rect id="XMLID_49_" x="18" y="27" fill="#754C24" width="9" height="9" />
+				<rect id="XMLID_48_" x="9" y="27" fill="#754C24" width="9" height="9" />
+				<rect id="XMLID_47_" x="54" y="27" fill="#754C24" width="9" height="9" />
+				<rect id="XMLID_46_" x="45" y="27" fill="#754C24" width="9" height="9" />
+				<rect id="XMLID_45_" x="36" y="27" fill="#754C24" width="9" height="9" />
+				<rect id="XMLID_44_" x="99" y="18" fill="#754C24" width="9" height="9" />
+				<rect id="XMLID_43_" x="90" y="18" fill="#754C24" width="9" height="9" />
+				<rect id="XMLID_42_" x="81" y="18" fill="#754C24" width="9" height="9" />
+				<rect id="XMLID_41_" x="126" y="18" fill="#754C24" width="9" height="9" />
+				<rect id="XMLID_40_" x="117" y="18" fill="#754C24" width="9" height="9" />
+				<rect id="XMLID_39_" x="108" y="18" fill="#754C24" width="9" height="9" />
+				<rect id="XMLID_38_" x="144" y="9" fill="#8C6239" width="9" height="9" />
+				<rect id="XMLID_37_" x="135" y="9" fill="#8C6239" width="9" height="9" />
+				<rect id="XMLID_36_" x="126" y="0" fill="#8C6239" width="9" height="9" />
+				<rect id="XMLID_35_" x="117" y="0" fill="#8C6239" width="9" height="9" />
+				<rect id="XMLID_34_" x="108" y="0" fill="#8C6239" width="9" height="9" />
+				<rect id="XMLID_33_" x="99" y="0" fill="#8C6239" width="9" height="9" />
+				<rect id="XMLID_32_" x="90" y="0" fill="#8C6239" width="9" height="9" />
+				<rect id="XMLID_31_" x="81" y="0" fill="#8C6239" width="9" height="9" />
+				<rect id="XMLID_30_" x="72" y="0" fill="#8C6239" width="9" height="9" />
+				<rect id="XMLID_29_" x="63" y="0" fill="#8C6239" width="9" height="9" />
+				<rect id="XMLID_28_" x="54" y="9" fill="#8C6239" width="9" height="9" />
+				<rect id="XMLID_27_" x="45" y="9" fill="#8C6239" width="9" height="9" />
+				<rect id="XMLID_26_" x="36" y="9" fill="#8C6239" width="9" height="9" />
+				<rect id="XMLID_25_" x="27" y="9" fill="#8C6239" width="9" height="9" />
+				<rect id="XMLID_24_" x="18" y="36" fill="#754C24" width="9" height="9" />
+				<rect id="XMLID_23_" x="9" y="36" fill="#754C24" width="9" height="9" />
+				<rect id="XMLID_22_" x="0" y="36" fill="#754C24" width="9" height="9" />
+				<rect id="XMLID_21_" x="18" y="18" fill="#8C6239" width="9" height="9" />
+				<rect id="XMLID_20_" x="9" y="18" fill="#8C6239" width="9" height="9" />
+				<rect id="XMLID_19_" x="0" y="27" fill="#8C6239" width="9" height="9" />
+				<rect id="XMLID_18_" x="9" y="45" fill="#754C24" width="9" height="9" />
+				<rect id="XMLID_17_" x="0" y="45" fill="#754C24" width="9" height="9" />
+			</g>
+		</g>
+	</svg>
+
+	</br>
+	</br>
+
+	<p><span style="font-weight: bold;" id='playerCounter'>  </span> of <span style="font-weight: bold;" id='maxPlayers'> </span>
+		players are in, waiting for other to join.
+	</p>
+</div>
+
+<div class="nes-container is-rounded is-ready-step">
+
+	<p>Everyone is in!</p>
+	<h2>Are you ready?</h2>
+
+
+	<input id='readyCounter' type='number' hidden>
+	<button class="nes-btn is-warning ready">START</button>
+	</br></br></br></br>
+	<p class="comment">Timer will start as soon as you submit the first guess. No refunds from here on! Aim for the win!
+	</p>
+</div>
+
 <script type="text/javascript" charset="utf-8">
-  var config;
-  var room_key = {{room_key|tojson}}
-  $(document).ready(function () {
-    // LEAVE THE CONFIG HERE
-    firebase_config = {
+	var config;
+	var room_key = {{ room_key| tojson}}
+	$(document).ready(function () {
+		// LEAVE THE CONFIG HERE
+		firebase_config = {
 
 
-    }
 
-    var center1 , center2, playerCounter, readyCounter, maxPlayers
+		}
 
-    function Ready() {
-      center1 = $('.center-screen')
-      center2 = $('center-screen2')
-      playerCounter = $('#playerCounter')
-      readyCounter = $('#readyCounter')
-      maxPlayers = $('#maxPlayers')
-      email = $('#email')
-      totalGuesses = $('#totalGuesses')
-    }
-    
-    Ready()
-    center2.hide()
+		var center1, center2, playerCounter, readyCounter, maxPlayers
 
-    firebase.initializeApp(firebase_config);
-    var dbTotalPlayers = firebase.database().ref().child('game').child(room_key).child('total_players');
-    var dbReady = firebase.database().ref().child('game').child(room_key).child('ready');
-    var allowedPlayers = firebase.database().ref().child('game').child(room_key).child('allowed_players')
-    var totalGuess = firebase.database().ref().child('game').child(room_key).child('guesses')
-   
-    dbTotalPlayers.on('value', snap => playerCounter.text(snap.val()))
-    dbReady.on('value', snap => readyCounter.val(snap.val()))
-    allowedPlayers.once('value', snap => {maxPlayers.text(snap.val())})
-    totalGuess.once('value', snap => {totalGuesses.text("You have " +snap.val() + " guess to solve this puzzle")})
+		function Ready() {
+			firstStep = $('.is-first-step')
+			secondStep = $('.is-second-step')
+			readyStep = $('.is-ready-step')
+			center3 = $('.center-screen3')
+			playerCounter = $('#playerCounter')
+			readyCounter = $('#readyCounter')
+			maxPlayers = $('#maxPlayers')
+			waitingForplayers = $('#waitingForPlayers')
+			email = $('#email')
+			playerName = $('#playerName')
+			totalGuesses = $('#totalGuesses')
+		}
 
-    $('#joinForm').submit(function (e) {
-      // Adding up one total player into firebase
-      firebase.database().ref().child('game').child(room_key).update({ 'total_players': parseInt(playerCounter.text()) + 1 });
-      // Using ajax to store users email into cookie
-      $.ajax({
-        method: 'POST',
-        url: '/register',
-        xhrFields: { withCredentials: true },
-        contentType: 'application/json;charset=UTF-8',
-        data: JSON.stringify({ 'email': email.val(), 'room_key': room_key })
-      }).then((response) => {
-        // Removing the email input and showing ready button
-        center1.fadeOut()
-        center2.show()
-      });
-      e.preventDefault();
-    })
+		Ready()
+		secondStep.hide()
+		readyStep.hide()
 
-    // Using ready button to confirm that players are ready to start playing
-    $('#ready').on('click', function (e) {
-      firebase.database().ref().child('game').child(room_key).update({ 'ready': parseInt(readyCounter.val()) + 1 })
-      $(this).fadeOut()
-      e.preventDefault()
-    })
+		firebase.initializeApp(firebase_config);
+		var dbTotalPlayers = firebase.database().ref().child('game').child(room_key).child('total_players');
+		var dbReady = firebase.database().ref().child('game').child(room_key).child('ready');
+		var dbMaxPlayers = firebase.database().ref().child('game').child(room_key).child('max_players')
+		var dbtotalGuess = firebase.database().ref().child('game').child(room_key).child('guesses')
+		var dbAllowedPlayers = firebase.database().ref().child('game').child(room_key).child('allowed_players');
 
-    // Watching the ready value so game can be initialized once all players are ready
-    dbReady.on('value', snap => {
-      if (snap.val() == parseInt(maxPlayers.text())) {
-        window.location.href = '/ponzi'
-      }
-    })
-  });
+		dbTotalPlayers.on('value', snap => playerCounter.text(snap.val()))
+		dbReady.on('value', snap => readyCounter.val(snap.val()))
+		dbMaxPlayers.once('value', snap => { maxPlayers.text(snap.val())})
+		dbtotalGuess.once('value', snap => { totalGuesses.text("You have " + snap.val() + " guess to solve this puzzle") })
+
+		$('#joinForm').submit(function (e) {
+			// Adding up one total player into firebase
+			firebase.database().ref().child('game').child(room_key).update({ 'total_players': parseInt(playerCounter.text()) + 1 });
+			// Using ajax to store users email into cookie
+			$.ajax({
+				method: 'POST',
+				url: '/register',
+				xhrFields: { withCredentials: true },
+				contentType: 'application/json;charset=UTF-8',
+				data: JSON.stringify
+					({
+						'email': email.val(),
+						'name': playerName.val(),
+						'room_key': room_key
+					})
+			}).then((response) => {
+				dbAllowedPlayers.once('value', snap => {
+					if(snap.val() == 0){
+						firstStep.fadeOut()
+						readyStep.fadeIn()
+					}
+					else{
+						secondStep.fadeIn()
+						firstStep.fadeOut()
+					}
+
+				})
+			});
+			e.preventDefault();
+		})
+
+		// Using ready button to confirm that players are ready to start playing
+		$('.ready').on('click', function (e) {
+			firebase.database().ref().child('game').child(room_key).update({ 'ready': parseInt(readyCounter.val()) + 1 })
+			$(this).fadeOut()
+			e.preventDefault()
+		})
+
+
+		// Checking number of allowed players on value change so i can show ready container once the lobby is full
+		dbAllowedPlayers.on('value', snap => {
+			if(snap.val() == 0){
+				secondStep.hide()
+				readyStep.fadeIn()
+			}
+		})
+
+		// Watching the ready value so game can be initialized once all players are ready
+		dbReady.on('value', snap => {
+			if (snap.val() == parseInt(maxPlayers.text())) {
+				window.location.href = '/ponzi'
+			}
+		})
+	});
 </script>
 {% endblock %}
