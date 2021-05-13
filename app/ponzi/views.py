@@ -2,7 +2,6 @@ from flask import render_template, redirect, session, request, jsonify, flash, u
 import time
 import json
 from random import sample, shuffle
-from hashids import Hashids
 
 from . import ponzibp as view
 
@@ -57,19 +56,36 @@ def join(room_key):
     # Clearing all previous sessions.
     session.clear()
 
-    return render_template('join.html', room_key=room_key)
+    # Cleaning up distribution to show the values inside the rooms chart bars.
+    distribution_chart = db.child('game').child(room_key).child('distribution').get().val()
+    distribution_chart = [int(x*100) for x in distribution_chart if x != None]
+  
+    return render_template('join.html', room_key=room_key, distribution_chart=distribution_chart)
 
 
 @view.route('/ponzi/', methods=['GET', 'POST'])
 def ponzi():
-    form = GuessForm()
+    """
+    Ponzi view is responsible for game itself , as the applicion doesnt have any sort of
+    auth system ponzi view relays on session that is created on /registration route once
+    player clicks requests access. 
+    
+    All the core informations are stored into clients session. Each request that passes form 
+    validation subtract the amount of guesses player has by one , until he reaches 0 wich 
+    means he failed to solve the puzzle and redirect player to home route.
 
+    Sessions objects "messages" and "guess" are used to show results of previous tries.
+
+    The rest of firebase queriying/logic is happening within app/firebase_utils/user.py,
+    even tough functions like set_timer , end_timer are pretty self explanatory check
+    them out in order to udnerstand args and logic happening there.
+    """
+    form = GuessForm()
     # Using session objects to retrieve the current use , session objects are initialized on /register route.
     current_user = crud_user.current_user(
         db, session['email'], session['room_key'])
 
-    # Decoding the secret number inside the game.
-    hashids = Hashids()
+    # Using the number that is generated and added to session on /register.
     number_to_guess = session['number']
 
     def has_doubles(n):
@@ -126,6 +142,20 @@ def ponzi():
 
 @view.route('/register', methods=['GET', 'POST'])
 def register():
+    """
+    A mock register view , since we need a way to auth users with email they use 
+    to grant access into room we are storing email and player name values into session.
+
+    Axios post is made from /join view once the player request the access.
+
+    Storing all the vital data in session helps application to work.
+    Register view is responsible for generatin of random 3 digits that are used 
+    as a number that player should guess once he enters the route.
+
+    Additionally the session data could be formated as a dictionary to gain better
+    code readability but ever since applicaion could get firebase authentication in
+    future i will keep this way for now.
+    """
     if request.method == 'POST':
         user_email = request.get_json()['email']
         player_name = request.get_json()['name']

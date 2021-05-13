@@ -81,22 +81,63 @@
 		}
 	}
 
+	.nes-progress {
+		height: 30px;
 
+	}
+
+	li {
+		margin-bottom: 20px;
+		list-style: none;
+	}
 </style>
 <div class="nes-container is-rounded is-first-step">
 
 
 	<p class="comment">Please enter your name and email adress to grant access to the room.</p>
 
-	<form id='joinForm'>
+	<form id="joinForm">
 		<div>
-			<input id='email' type='email' placeholder='Enter Your Email' style='margin-bottom: 1rem;' required />
-			<input id='playerName' type='text' placeholder='Enter your Name' required />
+			<input id="email" type="email" placeholder="Enter Your Email" style="margin-bottom: 1rem;" required="">
+			<input id="playerName" type="text" placeholder="Enter your Name" required="">
 		</div>
 		<div>
 			<button class="nes-btn is-primary">Requests Access</button>
 		</div>
 	</form>
+	<br>
+	<div>
+		<p class="comment">You will have to figure out the 3-digit number by sending guesses. No leading 0s or repeated
+			numbers are allowed. </p>
+		<p class="comment">The symbol 🧨 means those
+			numbers are in the secret number but in a different position. 💥 means the numbers are present and in the
+			right
+			position. You ought to find out each number and its position.</p>
+	</div>
+	<h2>Distribution</h2>
+	<div style="position:absolute;left:70%;bottom:70px;">
+
+		<ul>		
+		{% for distribution in distribution_chart[:-1] %}
+
+			<li>{{distribution}}%</li>
+
+
+		{% endfor %}
+		</ul>
+	</div>
+	<div>
+
+		{% for distribution in distribution_chart[:-1] %}
+		<progress class="nes-progress is-primary" value="{{distribution}}" max="100"></progress>
+		{% endfor %}
+
+		TOTAL LOSS
+
+		<progress class="nes-progress is-error" value="100" max="100"></progress>
+	</div>
+
+
 </div>
 
 
@@ -331,7 +372,8 @@
 	</br>
 	</br>
 
-	<p><span style="font-weight: bold;" id='playerCounter'>  </span> of <span style="font-weight: bold;" id='maxPlayers'> </span>
+	<p><span style="font-weight: bold;" id='playerCounter'> </span> of <span style="font-weight: bold;" id='maxPlayers'>
+		</span>
 		players are in, waiting for other to join.
 	</p>
 </div>
@@ -355,15 +397,6 @@
 	$(document).ready(function () {
 		// LEAVE THE CONFIG HERE
 		firebase_config = {
-
-	"apiKey": "AIzaSyCulR0OlEN-dCRPxVsx16paDmbZef-x1gI",
-    "authDomain": "test-90b1b.firebaseapp.com",
-    "databaseURL": "https://test-90b1b-default-rtdb.europe-west1.firebasedatabase.app",
-    "projectId": "test-90b1b",
-    "storageBucket": "test-90b1b.appspot.com",
-    "messagingSenderId": "1085178731342",
-    "appId": "1:1085178731342:web:56a11a11b07b25916fdc1f"
-
 
 
 		}
@@ -397,7 +430,7 @@
 
 		dbTotalPlayers.on('value', snap => playerCounter.text(snap.val()))
 		dbReady.on('value', snap => readyCounter.val(snap.val()))
-		dbMaxPlayers.once('value', snap => { maxPlayers.text(snap.val())})
+		dbMaxPlayers.once('value', snap => { maxPlayers.text(snap.val()) })
 		dbtotalGuess.once('value', snap => { totalGuesses.text("You have " + snap.val() + " guess to solve this puzzle") })
 
 		$('#joinForm').submit(function (e) {
@@ -417,11 +450,11 @@
 					})
 			}).then((response) => {
 				dbAllowedPlayers.once('value', snap => {
-					if(snap.val() == 0){
+					if (snap.val() == 0) {
 						firstStep.fadeOut()
 						readyStep.fadeIn()
 					}
-					else{
+					else {
 						secondStep.fadeIn()
 						firstStep.fadeOut()
 					}
@@ -438,10 +471,9 @@
 			e.preventDefault()
 		})
 
-
 		// Checking number of allowed players on value change so i can show ready container once the lobby is full
 		dbAllowedPlayers.on('value', snap => {
-			if(snap.val() == 0){
+			if (snap.val() == 0) {
 				secondStep.hide()
 				readyStep.fadeIn()
 			}
