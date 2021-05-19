@@ -5,13 +5,6 @@ class User():
         self.user_key = None
         self.room_key = None
 
-
-    # This method should be moved to database class but that class is obsolete so far.
-    def create_new_game(self, db, data):
-        new_game = db.child('game').push(data)
-        return new_game
-
-
     # Creating new user
     def create_new_user(self, db, email, name, room_key):
         allowed_players = db.child('game').child(room_key).child("allowed_players").get()

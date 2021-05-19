@@ -14,6 +14,13 @@
 		--black: #32383c;
 	}
 
+	.flex-container {
+		display: grid;
+		grid-template-columns: auto auto auto;
+		padding: 10px;
+		margin
+	}
+
 	.box {
 		height: 300px;
 		display: flex;
@@ -31,7 +38,7 @@
 
 	body {
 		margin: 0 auto;
-		max-width: 480px;
+		max-width: 100%;
 		width: 100%;
 		text-align: center;
 	}
@@ -51,18 +58,30 @@
 
 	}
 </style>
-{% for game in games %}
+<div class="nes-container with-title">
+	{% if create_rooms %}
+	<p class="title nes-text is-error">Create new Room</p>
+	<div style='display: flex; align-items: center; justify-content: center;'>
+		<a href="{{url_for('ponzi.create_room')}}">
+		<button type="button" class="nes-btn is-primary">Create New Room</button>
+		</a>
+	{% else %}
+	<p> Maximum amount of rooms is opened please try again later.</p> 
+	{% endif %}
+</div>
+</div>
+<div class='flex-container'>
+	{% for game in games %}
+	{% if game.val().game_type == 'Ponzi' and game.val().status != 'CLOSED' %}
+	<div class="nes-container is-rounded" id='{{game.key()}}'>
+		<img src="https://ipfs.io/ipfs/QmRZBaB5A9WJhkHYR6sNK3jNj3sy4N6rQHhWyK3K8DNrku?filename=pxArt.png" />
+		<h2>Ponzi Room</h2>
+		<p>High Risk. High Reward</p>
 
-{% if game.val().game_type == 'Ponzi' %}
-<div class="nes-container is-rounded">
-	<img src="https://ipfs.io/ipfs/QmRZBaB5A9WJhkHYR6sNK3jNj3sy4N6rQHhWyK3K8DNrku?filename=pxArt.png" />
-	<h2>Ponzi Room</h2>
-	<p>High Risk. High Reward</p>
-
-	<a  class="nes-badge"> <span class="is-primary">OPEN</span>
-	</a>
-	<a href="{{url_for('ponzi.join', room_key=game.key())}}"
-	<button class="nes-btn" style="
+		<a class="nes-badge"> <span class="is-primary">OPEN</span>
+		</a>
+		<a href="{{url_for('ponzi.join', room_key=game.key())}}" id='btn-link'">
+	<button class=" nes-btn" href="{{url_for('ponzi.join', room_key=game.key())}}" style="
 	  --ns-bg-color: hsl(323,71%,86%);
 	  --ns-shadow-color:hsl(323,71%,76%);
 	  --ns-border:8px;
@@ -70,62 +89,99 @@
 		color:hsl(323,71%,70%);                               ">Enter</button>
 		</a>
 
-</div>
+	</div>
 
-{% elif game.val().game_type == 'Ignatova' %}
+	{% elif game.val().game_type == 'Ignatova' %}
 
-<div class="nes-container is-rounded">
-	<img src="https://ipfs.io/ipfs/QmYzyGv9PQZtPExcKtQEGUg9MmLVEGcZrSqbWmo5v9wFoT?filename=ignatova_low.png" />
-	<h2>Ignatova Room</h2>
-	<p>Low Risk. Low Reward</p>
+	<div class="nes-container is-rounded">
+		<img src="https://ipfs.io/ipfs/QmYzyGv9PQZtPExcKtQEGUg9MmLVEGcZrSqbWmo5v9wFoT?filename=ignatova_low.png" />
+		<h2>Ignatova Room</h2>
+		<p>Low Risk. Low Reward</p>
 
-	<a href="#" class="nes-badge"> <span class="is-primary">OPEN</span>
-	</a>
-	<button class="nes-btn" style="
+		<a href="#" class="nes-badge"> <span class="is-primary">OPEN</span>
+		</a>
+		<button class="nes-btn" style="
 	  --ns-bg-color: hsl(323,71%,86%);
 	  --ns-shadow-color:hsl(323,71%,76%);
 	  --ns-border:8px;
 	  --ns-border-color:#51352f;
 									 color:hsl(323,71%,70%);                               ">Enter</button>
 
-</div>
+	</div>
 
-{% elif game.val().game_type == 'Maddof' %}
+	{% elif game.val().game_type == 'Maddof' %}
 
-<div class="nes-container is-rounded">
-	<img class="madoff" src="https://ipfs.io/ipfs/QmYhpjQbb1tLfLoW1mDskkGwQRkf2E1rgT4hbh6Jj1uRhh?filename=madoff.png" />
-	<h2>Madoff Room</h2>
-	<p>High Risk. Medium Reward</p>
+	<div class="nes-container is-rounded">
+		<img class="madoff"
+			src="https://ipfs.io/ipfs/QmYhpjQbb1tLfLoW1mDskkGwQRkf2E1rgT4hbh6Jj1uRhh?filename=madoff.png" />
+		<h2>Madoff Room</h2>
+		<p>High Risk. Medium Reward</p>
 
-	<a href="#" class="nes-badge is-error"> <span class="is-error">CLOSED</span>
-	</a>
-	<button class="nes-btn is-disabled" style="
+		<a href="#" class="nes-badge is-error"> <span class="is-error">CLOSED</span>
+		</a>
+		<button class="nes-btn is-disabled" style="
 	  --ns-bg-color: hsl(323,71%,86%);
 	  --ns-shadow-color:hsl(323,71%,76%);
 	  --ns-border:8px;
 	  --ns-border-color:#51352f;
 									 color:hsl(323,71%,70%);                               ">Enter</button>
 
-</div>
+	</div>
 
-{% elif game.val().game_type == 'Rossem' %}
+	{% elif game.val().game_type == 'Rossem' %}
 
-<div class="nes-container is-rounded">
-	<img class="madoff"
-		src="https://ipfs.io/ipfs/QmfG3qP5MQD78uGHQzn9F5SfHDz3A978hcNdukxoL3PREy?filename=vanrossem.png" />
-	<h2>Van Rossem Room</h2>
-	<p>Medium Risk. Medium Reward</p>
+	<div class="nes-container is-rounded">
+		<img class="madoff"
+			src="https://ipfs.io/ipfs/QmfG3qP5MQD78uGHQzn9F5SfHDz3A978hcNdukxoL3PREy?filename=vanrossem.png" />
+		<h2>Van Rossem Room</h2>
+		<p>Medium Risk. Medium Reward</p>
 
-	<a href="#" class="nes-badge is-error"> <span class="is-warning">ONGOING</span>
-	</a>
-	<button class="nes-btn is-disabled" style="
+		<a href="#" class="nes-badge is-error"> <span class="is-warning">ONGOING</span>
+		</a>
+		<button class="nes-btn is-disabled" style="
 	  --ns-bg-color: hsl(323,71%,86%);
 	  --ns-shadow-color:hsl(323,71%,76%);
 	  --ns-border:8px;
 	  --ns-border-color:#51352f;
 		color:hsl(323,71%,70%);                               ">Enter</button>
 
+	</div>
+	{% endif %}
+	{% endfor %}
 </div>
-{% endif %}
-{% endfor %}
+<script>
+	$(document).ready(function () {
+
+		var firebase_config = {
+
+		}
+
+		firebase.initializeApp(firebase_config);
+
+		var dbRooms = firebase.database().ref().child('game');
+
+		dbRooms.on('value', snap => {
+			for (var room in snap.val()) {
+				if (snap.val()[room]['status'] == 'ONGOING') {
+					var $room = $('#' + room)
+					$room.find('.nes-badge span').text(snap.val()[room]['status'])
+					$room.find('.nes-badge span').removeClass('is-primary')
+					$room.find('.nes-badge span').addClass('is-warning')
+					$room.find('.nes-btn').addClass('is-disabled')
+					$room.find('.nes-btn').parent().attr('href', null)
+					
+				}
+				else if (snap.val()[room]['status'] == 'CLOSED') {
+					var $room = $('#' + room)
+					$room.find('.nes-badge span').text(snap.val()[room]['status'])
+					$room.find('.nes-badge span').removeClass('is-primary')
+					$room.find('.nes-badge span').addClass('is-error')
+					$room.find('.nes-btn').addClass('is-disabled')
+					
+				}
+			}
+		})
+
+	})
+</script>
 {% endblock %}

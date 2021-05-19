@@ -8,34 +8,50 @@ from . import ponzibp as view
 from ..forms import GuessForm, GameForm
 
 from ..firebase_utils.user import crud_user
+from ..firebase_utils.game import crud_game
 from ..firebase_utils.db import db
 
 
-@view.route('/admin', methods=['POST', 'GET'])
-def admin():
+@view.route('/create-room', methods=['POST', 'GET'])
+def create_room():
     data = {
         'game_type': '',
-        'allowed_players': 10,
+        'allowed_players': 0,
         'players': "{}",
         'total_players': 0,
         'ready': 0,
-        'distribution': {1: 0.75, 2: 0.50, 3: 0.25, 4: 0, 5: -1},
+        'distribution': "{}",
         'guesses': 0,
+        'n_losers':0,
+        'contribution':0,
+        'max_return':0,
+        'status': 'OPEN',
+        'solved_n': 0
+ 
     }
 
     form = GameForm()
-  
-    if request.method == 'POST' and form.validate_on_submit():
-        # Editing the game data object.
-        data['game_type'] = form.game_type.data
-        data['allowed_players'] = form.allowed_players.data
-        data['max_players'] = form.allowed_players.data
-        data['guesses'] = form.guesses.data
+    create_rooms = db.child('game').order_by_child('status').equal_to('OPEN').get()
 
-        # We can add separate class from Games instead of using User class, for now its obsolete.
-        crud_user.create_new_game(db, data)
-        flash('Successfuly created New Game')
-        return redirect(url_for('ponzi.admin'))
+    if request.method == 'POST' and form.validate_on_submit():
+
+        if len(create_rooms.val()) <= 6:
+            # Editing the game data object.
+            data['game_type'] = form.game_type.data
+            data['allowed_players'] = form.allowed_players.data
+            data['max_players'] = form.allowed_players.data
+            data['n_losers'] = form.n_losers.data
+            data['contribution'] = form.contribution.data
+            data['max_return'] = form.max_return.data/100
+            data['guesses'] = form.guesses.data
+            distibution=form.distribution(data['allowed_players'],data['n_losers'],data['contribution'],data['max_return'])
+            data['distribution'] = dict(zip(range(1,len(distibution)+1),distibution))
+            # We can add separate class from Games instead of using User class, for now its obsolete.
+            crud_game.create_new_game(db, data)
+            flash('Successfuly created New Game')
+            return redirect(url_for('ponzi.create_room'))
+        else:
+            flash ('Maximum amout of opened rooms reached, please try again later !')
 
     return render_template('admin.html', form=form)
 
@@ -43,12 +59,18 @@ def admin():
 @view.route('/')
 def home():
     games = db.child('game').get()
+    create_rooms = db.child('game').order_by_child('status').equal_to('OPEN').get()
 
+    # Boolean field for create new button.
+    if len(create_rooms.val()) >= 6:
+        create_rooms = False
+    else:
+        create_rooms = True
     # Check if any games exists in firebase
     if games.val() == None:
         games = []
 
-    return render_template('index.html', games=games)
+    return render_template('index.html', games=games, create_rooms=create_rooms)
 
 
 @view.route('/join/<room_key>')
@@ -59,8 +81,9 @@ def join(room_key):
     # Cleaning up distribution to show the values inside the rooms chart bars.
     distribution_chart = db.child('game').child(room_key).child('distribution').get().val()
     distribution_chart = [int(x*100) for x in distribution_chart if x != None]
+    contribution = db.child('game').child(room_key).child('contribution').get().val()
   
-    return render_template('join.html', room_key=room_key, distribution_chart=distribution_chart)
+    return render_template('join.html', room_key=room_key, distribution_chart=distribution_chart, contribution=contribution)
 
 
 @view.route('/ponzi/', methods=['GET', 'POST'])
@@ -128,6 +151,9 @@ def ponzi():
 
         if guess == number_to_guess:
             crud_user.end_timer(db, time.time())
+            crud_game.add_solved(db, session['room_key'])
+            crud_game.check_game_status(db, session['room_key'])
+            flash (number_to_guess)
             session['messages'].append('You got it !')
             return redirect(url_for('ponzi.rank', room_key=session['room_key']))
         
@@ -138,6 +164,14 @@ def ponzi():
 
     return render_template('game.html', number=number_to_guess, counter=session['guesses'], form=form,
                            notification=zip(session['messages'], session['guess']))
+
+
+
+@view.route('/rank/<room_key>')
+def rank(room_key):
+    crud_user.set_position(db)
+
+    return render_template('ranking.html', room_key=room_key)
 
 
 @view.route('/register', methods=['GET', 'POST'])
@@ -172,6 +206,8 @@ def register():
         current_user = crud_user.current_user(db, user_email, room_key)
         if not current_user:
             crud_user.create_new_user(db, user_email, player_name , room_key)
+        else:
+            return jsonify({'data': 'Player already exists'}, 403)
         
         letters = sample('0123456789', 3)
 
@@ -181,11 +217,4 @@ def register():
         number = ''.join(letters)
         session['number'] = number
 
-        return jsonify({'Message': 'Session intialized'})
-
-
-@view.route('/rank/<room_key>')
-def rank(room_key):
-    crud_user.set_position(db)
-
-    return render_template('ranking.html', room_key=room_key)
+        return jsonify({'data': 'Session intialized'}, 201)

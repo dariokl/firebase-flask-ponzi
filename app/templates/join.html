@@ -92,20 +92,6 @@
 	}
 </style>
 <div class="nes-container is-rounded is-first-step">
-
-
-	<p class="comment">Please enter your name and email adress to grant access to the room.</p>
-
-	<form id="joinForm">
-		<div>
-			<input id="email" type="email" placeholder="Enter Your Email" style="margin-bottom: 1rem;" required="">
-			<input id="playerName" type="text" placeholder="Enter your Name" required="">
-		</div>
-		<div>
-			<button class="nes-btn is-primary">Requests Access</button>
-		</div>
-	</form>
-	<br>
 	<div>
 		<p class="comment">You will have to figure out the 3-digit number by sending guesses. No leading 0s or repeated
 			numbers are allowed. </p>
@@ -115,15 +101,15 @@
 			position. You ought to find out each number and its position.</p>
 	</div>
 	<h2>Distribution</h2>
-	<div style="position:absolute;left:70%;bottom:70px;">
+	<div style="position:absolute;left:70%;bottom: 195px;">
 
-		<ul>		
-		{% for distribution in distribution_chart[:-1] %}
+		<ul>
+			{% for distribution in distribution_chart[:-1] %}
 
 			<li>{{distribution}}%</li>
 
 
-		{% endfor %}
+			{% endfor %}
 		</ul>
 	</div>
 	<div>
@@ -136,12 +122,25 @@
 
 		<progress class="nes-progress is-error" value="100" max="100"></progress>
 	</div>
+	<p class="comment">Here is the distribution of returns. If you agree:</p>
+	</br>
 
-
+	<button class="nes-btn is-primary" id='continue'>Continue</button>
 </div>
 
 
+</div>
 <div class="nes-container is-rounded is-second-step">
+
+	<h2>{{contribution}} $</h2>
+	<p>Pay to request to join</p>
+
+	<div id="paypal-button-container"></div>
+	<p class="comment">Refunds will be processed if you fail to join the game</p>
+</div>
+
+
+<div class="nes-container is-rounded is-third-step">
 
 	<h2>Waiting....</h2>
 	</br>
@@ -391,30 +390,29 @@
 	</p>
 </div>
 
+
+<script
+	src="https://www.paypal.com/sdk/js?client-id=&disable-funding=credit,card"> // Required. Replace YOUR_CLIENT_ID with your sandbox client ID.
+</script>
+
 <script type="text/javascript" charset="utf-8">
 	var config;
 	var room_key = {{ room_key| tojson}}
+	var contribution = {{ contribution| tojson }}
+
 	$(document).ready(function () {
 		// LEAVE THE CONFIG HERE
-		firebase_config = {
-
-			"apiKey": "AIzaSyCulR0OlEN-dCRPxVsx16paDmbZef-x1gI",
-			"authDomain": "test-90b1b.firebaseapp.com",
-			"databaseURL": "https://test-90b1b-default-rtdb.europe-west1.firebasedatabase.app",
-			"projectId": "test-90b1b",
-			"storageBucket": "test-90b1b.appspot.com",
-			"messagingSenderId": "1085178731342",
-			"appId": "1:1085178731342:web:56a11a11b07b25916fdc1f"
-
+		var firebase_config = {
 
 
 		}
 
 		var center1, center2, playerCounter, readyCounter, maxPlayers
-
+		// Marking the jquery selectors to maintain some readability.
 		function Ready() {
 			firstStep = $('.is-first-step')
 			secondStep = $('.is-second-step')
+			thirdStep = $('.is-third-step')
 			readyStep = $('.is-ready-step')
 			center3 = $('.center-screen3')
 			playerCounter = $('#playerCounter')
@@ -427,7 +425,9 @@
 		}
 
 		Ready()
+		// Hiding the steps and showing the first-step only !
 		secondStep.hide()
+		thirdStep.hide()
 		readyStep.hide()
 
 		firebase.initializeApp(firebase_config);
@@ -442,36 +442,66 @@
 		dbMaxPlayers.once('value', snap => { maxPlayers.text(snap.val()) })
 		dbtotalGuess.once('value', snap => { totalGuesses.text("You have " + snap.val() + " guess to solve this puzzle") })
 
-		$('#joinForm').submit(function (e) {
-			// Adding up one total player into firebase
-			firebase.database().ref().child('game').child(room_key).update({ 'total_players': parseInt(playerCounter.text()) + 1 });
-			// Using ajax to store users email into cookie
-			$.ajax({
-				method: 'POST',
-				url: '/register',
-				xhrFields: { withCredentials: true },
-				contentType: 'application/json;charset=UTF-8',
-				data: JSON.stringify
-					({
-						'email': email.val(),
-						'name': playerName.val(),
-						'room_key': room_key
-					})
-			}).then((response) => {
-				dbAllowedPlayers.once('value', snap => {
-					if (snap.val() == 0) {
-						firstStep.fadeOut()
-						readyStep.fadeIn()
-					}
-					else {
-						secondStep.fadeIn()
-						firstStep.fadeOut()
-					}
 
-				})
-			});
-			e.preventDefault();
+		// First step is simple continue button comfirmation
+		$('#continue').on('click', function () {
+			firstStep.hide()
+			secondStep.fadeIn()
 		})
+
+		// Second step is gettng comfirmation of the payment for contribution to the game.
+		paypal.Buttons({
+			// Set up the transaction
+			createOrder: function (data, actions) {
+				return actions.order.create({
+					purchase_units: [{
+						amount: {
+							value: contribution
+						}
+					}]
+				});
+			},
+			// Finalize the transaction
+			onApprove: function (data, actions) {
+				return actions.order.capture().then(function (details) {
+					// Show a success message to the buyer
+					firebase.database().ref().child('game').child(room_key).update({ 'total_players': parseInt(playerCounter.text()) + 1 });
+					// Using ajax to store users email into cookie
+					$.ajax({
+						method: 'POST',
+						url: '/register',
+						xhrFields: { withCredentials: true },
+						contentType: 'application/json;charset=UTF-8',
+						data: JSON.stringify
+							({
+								'email': details.payer.email_address,
+								'name': details.payer.name.given_name,
+								'room_key': room_key
+							})
+					}).then((response) => {
+						// Future implementation should contain response status check , etc response.status === 201 and continue with 
+						// the singup process else show error to player.
+
+						// This firebase check is used just so that last player that checks in doesnt have 
+						dbAllowedPlayers.once('value', snap => {
+							if (snap.val() == 0) {
+								secondStep.fadeOut()
+								readyStep.fadeIn()
+								console.log('here')
+							}
+							else {
+								secondStep.fadeOut()
+								thirdStep.fadeIn()
+								console.log('here')
+							}
+
+						})
+					});
+					alert('Your transaction has been completed ! ');
+				});
+			}
+
+		}).render('#paypal-button-container');
 
 		// Using ready button to confirm that players are ready to start playing
 		$('.ready').on('click', function (e) {
@@ -483,7 +513,7 @@
 		// Checking number of allowed players on value change so i can show ready container once the lobby is full
 		dbAllowedPlayers.on('value', snap => {
 			if (snap.val() == 0) {
-				secondStep.hide()
+				thirdStep.hide()
 				readyStep.fadeIn()
 			}
 		})
@@ -491,9 +521,12 @@
 		// Watching the ready value so game can be initialized once all players are ready
 		dbReady.on('value', snap => {
 			if (snap.val() == parseInt(maxPlayers.text())) {
+				firebase.database().ref().child('game').child(room_key).update({ 'status': 'ONGOING' })
 				window.location.href = '/ponzi'
 			}
 		})
+
+
 	});
 </script>
 {% endblock %}

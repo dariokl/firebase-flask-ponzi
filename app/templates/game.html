@@ -1,82 +1,130 @@
-{% extends 'header.html' %} 
-{% block head %}
-<link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
-<link href="https://unpkg.com/nes.css@latest/css/nes.min.css" rel="stylesheet">
-<link rel="stylesheet" href="/static/css/core.css">
-{% endblock %}
-{% block content %}
+{% extends 'header.html' %} {% block head %}
+<link
+  href="https://fonts.googleapis.com/css?family=Press+Start+2P"
+  rel="stylesheet"
+/>
+<link
+  href="https://unpkg.com/nes.css@latest/css/nes.min.css"
+  rel="stylesheet"
+/>
+<link rel="stylesheet" href="/static/css/core.css" />
+{% endblock %} {% block content %}
 
 <div class="mobilebar-container mobile-layout">
-<nav class="mobilebar-tab">
+  <nav class="mobilebar-tab">
+    <div id="applicationBarMobileButton1" class="mobilebar-tab-item active">
+      <span class="nes-textarea mobilebar-tab__icon">
+        Invite
+        <i class="fa share"></i>
+      </span>
+    </div>
 
+    <div class="mobilebar-tab-item">
+      <span class="nes-textarea mobilebar-tab__icon">
+        Paid
+        <i class="fa coin"></i>
+      </span>
+    </div>
 
-        <div id="applicationBarMobileButton1" class="mobilebar-tab-item active">
-            <span class="nes-textarea mobilebar-tab__icon"> Invite
-                <i class="fa share"></i>
-            </span>
-        </div>
+    <div class="mobilebar-tab-item">
+      <span class="mobilebar-tab__icon nes-textarea"
+        >10 in
+        <i class="fas chair"></i>
+      </span>
+    </div>
 
-        <div class="mobilebar-tab-item">
-            <span class="nes-textarea mobilebar-tab__icon"> Paid
-                <i class="fa coin"></i>
-            </span>
-        </div>
-      
-        <div class="mobilebar-tab-item">
-            <span class="mobilebar-tab__icon nes-textarea">10 in
-                <i class="fas chair"></i>
-            </span>
-        </div>
-
-        <div class="mobilebar-tab-overlay"></div>
-    </nav>
+    <div class="mobilebar-tab-overlay"></div>
+  </nav>
 </div>
 .
 <!--:-->
 <div class="square-container">
-
   <div class="square nes-textarea">
-    <div class="content">
-    </div>
+    <div class="content"></div>
   </div>
 
   <div class="square nes-textarea">
-    <div class="content spread">
-    </div>
+    <div class="content spread"></div>
   </div>
 
-  <div class="square nes-textarea"> 
-    <div class="content column">
-    </div>
+  <div class="square nes-textarea">
+    <div class="content column"></div>
   </div>
-
-
 </div>
-<h1 >00:01</h1>
-{{counter}}  - {{number}} {{messagess}}
+<h1><span id="minutes">00</span> min <span id="seconds">00</span> sec</h1>
+{{counter}} - {{number}} {{messagess}}
 <!--Make sure the form has the autocomplete function switched off:-->
-<form method='POST'>
+<form method="POST" id="guessForm">
   {{ form.csrf_token }}
   <div>
-    {{form.guess(class='nes-input', pattern="[0-9]*", inputmode='numeric', placeholder='Guess')}}
+    {{form.guess(class='nes-input', pattern="[0-9]*", inputmode='numeric',
+    placeholder='Guess')}}
   </div>
-  <input class="nes-btn is-primary is-centered" type="submit" value="Try!" style="width:35%">
+  <input
+    class="nes-btn is-primary is-centered"
+    type="submit"
+    value="Try!"
+    style="width: 35%"
+  />
 </form>
 
-
-<div class="nes-table-responsive" style="padding:10px;">
-  <table class="nes-table is-bordered is-centered" style="width:100%;overflow-x:auto;">
+<div class="nes-table-responsive" style="padding: 10px">
+  <table
+    class="nes-table is-bordered is-centered"
+    style="width: 100%; overflow-x: auto"
+  >
     {% for message, guess in notification %}
     <tr>
       <th>{{guess}}</th>
       <th>{{message}}</th>
     </tr>
     {% endfor %}
-    
   </table>
 </div>
-  
+<script>
+  $(document).ready(function () {
 
+    // Function to calcaute seconds between the start of the game and current time.
+    function calculateSeconds() {
+      var timer = localStorage.getItem("sec");
+
+      timer == null
+        ? (timer = null)
+        : (timer = Math.floor(Date.now() / 1000 - timer / 1000));
+
+      return timer;
+    }
+    // Contains either null or seconds.
+    var sec = calculateSeconds();
+
+    function pad(val) {
+      return val > 9 ? val : "0" + val;
+    }
+    // Timer that updates the html code each second
+    function runTimer() {
+      setInterval(function () {
+        $("#seconds").html(pad(++sec % 60));
+        $("#minutes").html(pad(parseInt(sec / 60, 10)));
+      }, 1000);
+    }
+    // Trigger for timer once player submits his first guess , timestamp
+    // gets stored into local storage
+    $("#guessForm").submit(function () {
+      var timer = localStorage.getItem("sec");
+      if (timer != null) {
+      } else {
+        localStorage.setItem("sec", Date.now());
+      }
+    });
+
+    // Checking if player already started his game , if so loading up HTML to remove 
+    // one second delay inside the runTimer function and starting the function itself.
+    if (sec !== null) {
+      $("#seconds").html(pad(++sec % 60));
+      $("#minutes").html(pad(parseInt(sec / 60, 10)));
+      runTimer();
+    }
+  });
+</script>
 
 {% endblock %}
-

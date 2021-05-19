@@ -1,22 +1,39 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport">
 
-    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-database.js"></script>
-    {% block head %} {% endblock %}
-    <title class='text-center'>Hello, world!</title>
-  </head>
-  <body>
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport">
 
-    {% block content %}
-    {% endblock %}
+  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-database.js"></script>
+  {% block head %} {% endblock %}
+  <title class='text-center'>Hello, world!</title>
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+  <ul class=flashes>
+    {% for message in messages %}
+    <li>{{ message }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  {% endwith %}
+</head>
 
-    <img class="nes-avatar" alt="Gravatar image example" src="https://res.cloudinary.com/dqenlmcw2/image/upload/v1619402955/4a0d0ebaff754451bbb6c00485f94e13_opv8mk.png" style="image-rendering: pixelated;min-width: 100px;height:65px;">
+<body>
 
-  
-  </body>
+
+  {% block content %}
+  {% endblock %}
+
+  <img class="nes-avatar" alt="Gravatar image example"
+    src="https://res.cloudinary.com/dqenlmcw2/image/upload/v1619402955/4a0d0ebaff754451bbb6c00485f94e13_opv8mk.png"
+    style="image-rendering: pixelated;min-width: 100px;height:65px;">
+
+
+</body>
+
 </html>

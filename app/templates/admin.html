@@ -1,4 +1,4 @@
-{% extends 'header.html' %} 
+{% extends 'header.html' %}
 {% block content %}
 {% block head %}
 <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
@@ -19,24 +19,37 @@
 <div class="center-screen">
   <div>
     <p>Create New Lobby</p>
+    <i class="nes-icon trophy is-large"></i>
 
   </div>
   <form method='POST'>
       {{ form.csrf_token}}
-    <div>
+    <div class='nes-field'>
     {{form.allowed_players.label}}
-    {{form.allowed_players()}}
+    {{form.allowed_players(class='nes-input')}}
   </div>
-  <div>
+  <div class='nes-field'>
     {{form.guesses.label}}
-    {{form.guesses()}}
+    {{form.guesses(class='nes-input')}}
   </div>
-  <div>
+  <div class='nes-field'>
+    {{form.n_losers.label}}
+    {{form.n_losers(class='nes-input')}}
+  </div>
+  <div class='nes-field'>
+    {{form.contribution.label}}
+    {{form.contribution(class='nes-input')}}
+  </div>
+  <div class='nes-field'>
+    {{form.max_return.label}}
+    {{form.max_return(class='nes-input')}}
+  </div>
+  <div class="nes-select">
     {{form.game_type.label}}
-    {{form.game_type()}}
+    {{form.game_type(class='nes-select')}}
   </div>
   <div>
-    <button type='submit' style='margin-top: 1rem;'> Create Game </button>
+    <button type='submit'  class='nes-btn is-success' style='margin-top: 1rem;'> Create Game </button>
   </div>
   </form>
 </div>
