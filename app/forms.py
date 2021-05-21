@@ -25,7 +25,7 @@ class GameForm(FlaskForm):
     @staticmethod
     def distribution(n_players, losers, contribution, max_return):
       # commision the game admin takes to cover cost.only changes here no customizable
-        admin_cut = 0.05
+        admin_cut = 0.1
         total_coins = n_players*contribution
         n_earners = (n_players-losers)  # money earned can be 0%
   # available pool of money to distribute
