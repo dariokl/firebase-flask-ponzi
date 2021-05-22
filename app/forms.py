@@ -24,37 +24,32 @@ class GameForm(FlaskForm):
 
     @staticmethod
     def distribution(n_players, losers, contribution, max_return):
-      # commision the game admin takes to cover cost.only changes here no customizable
-        admin_cut = 0.1
-        total_coins = n_players*contribution
-        n_earners = (n_players-losers)  # money earned can be 0%
-  # available pool of money to distribute
-        pool_total = (losers*contribution)-(total_coins*admin_cut)
-        avrg_return = pool_total/n_earners
-  # we are goint to create step following a pythaghorean approach and based on the variables set by user
-        hyp = math.sqrt(n_earners**2+max_return**2)
-  # width of each step
-        width = hyp/n_earners
-  # the steps height plus a 10% deeper
-        step = math.sqrt(width**2-1)
-        step = step+(step*admin_cut)
-  # lets make sure there is enough money to cover the area of the triangle designed by the user
-        area = (n_earners*(max_return*100))/2
-        # just checking there would be anough money fill out the triangle
-        excess = pool_total-area
-        lista = []
-        adjust = []
-        for i in range(n_earners):
-            steps=i
-            retorno=max_return-(step*steps)
-            gain=1*retorno
-            count = pool_total-gain*contribution
-            pool_total=count
-            lista.append(gain)
-            adjust.append(count)
-        *_, last = adjust
-        remaining=last/n_players/contribution
-        distribution = [x+remaining for x in lista]
-        tail= [-1 for i in range(losers)]
-        distribution=distribution+tail
-        return distribution
+      #commision the game admin takes to cover cost.only changes here no customizable
+      admin_cut=0.1
+      total_coins=n_players*contribution
+      n_earners=(n_players-losers) #money earned can be 0%
+      #available pool of money to distribute
+      pool_total= (losers*contribution)-(total_coins*admin_cut)
+      avrg_return=pool_total/n_earners
+      #we are goint to create step following a pythaghorean approach and based on the variables set by user
+      hyp=math.sqrt(n_earners**2+max_return**2)
+      #width of each step
+      width=hyp/n_earners
+      #the steps height to build my distribution staircase
+      step=math.sqrt(width**2-1)
+      #step= step+(step*admin_cut)
+      #lets make sure there is enough money to cover the area of the triangle designed by the user
+      area=(n_earners*max_return)/2
+      area_pr=((step/2)*n_earners)
+      diff= (losers-admin_cut)-(area+area_pr)
+      adjust=diff/n_earners
+      lista=[]
+      for i in range(n_earners):
+          steps=i
+          retorno=max_return-(step*steps)
+          gain=1*retorno
+          lista.append(gain)
+      distribution = [x+adjust for x in lista]
+      tail= [-1 for i in range(losers)]
+      distribution=distribution+tail
+      return distribution
