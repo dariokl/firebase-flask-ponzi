@@ -90,7 +90,16 @@
 		margin-bottom:17px;
 		list-style: none;
 	}
+
+	#load{
+    width:100%;
+    height:100%;
+    position:fixed;
+    z-index:9999;
+    background:url("https://thumbs.gfycat.com/SinfulHalfBagworm-size_restricted.gif") no-repeat left center rgba(0,0,0,0.25)
+}
 </style>
+<div id="load"></div>
 <div class="nes-container is-rounded is-first-step">
 	<div>
 		<p class="comment">Remember! Yoy will have to figure out the 3-digit number by sending guesses. No leading 0s or repeated
@@ -403,6 +412,14 @@
 	var config;
 	var room_key = {{ room_key| tojson}}
 	var contribution = {{ contribution| tojson }}
+
+	document.onreadystatechange = function () {
+	  var state = document.readyState
+	  if (state == 'complete') {
+	         document.getElementById('interactive');
+	         document.getElementById('load').style.visibility="hidden";
+	  }
+	}
 
 	$(document).ready(function () {
 		// LEAVE THE CONFIG HERE

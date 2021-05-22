@@ -25,7 +25,7 @@
 		height: 300px;
 		display: flex;
 		flex-direction: column;
-		flex-wrap: wrap;
+		flex-wrap: no-wrap;
 	}
 
 	.box>* {
@@ -36,13 +36,21 @@
 		box-sizing: border-box;
 	}
 
-	body {
-		margin: 0 auto;
-		max-width: 100%;
-		width: 100%;
-		text-align: center;
-	}
 
+
+	body {
+	  margin:0 auto;
+	  max-width: 480px;
+	  width:100%;
+	  text-align:center;
+	 display: flex;
+	  flex-wrap: wrap;
+	  overflow: auto;
+	 padding:1em;
+
+
+
+	}
 	.nes-container {
 		top: 10px;
 
@@ -55,6 +63,11 @@
 
 	.nes-btn {
 		left: 10%;
+
+	}
+	img{
+    width:400px;
+		max-width:100%;
 
 	}
 </style>

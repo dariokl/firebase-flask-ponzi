@@ -17,7 +17,7 @@ class GuessForm(FlaskForm):
 class GameForm(FlaskForm):
     game_type = SelectField('Type of Game', choices=GAME_TYPES)
     allowed_players = IntegerField('Number of participants')
-    guesses = IntegerField('Amount of guesses')
+    guesses = SelectField('# of Guesses', choices=[50,100])
     n_losers = IntegerField('How many lose all money?')
     contribution = IntegerField('How much money to participate?')
     max_return = IntegerField('Desired return for winner in %')
@@ -45,10 +45,10 @@ class GameForm(FlaskForm):
         lista = []
         adjust = []
         for i in range(n_earners):
-            steps = i+1
+            steps = i
             retorno = max_return-(step*steps)
             gain = 1*retorno
-            count = pool_total-gain*100
+            count = pool_total-gain*contribution
             pool_total = count
             lista.append(gain)
             adjust.append(count)
