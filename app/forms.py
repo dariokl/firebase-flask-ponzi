@@ -45,16 +45,16 @@ class GameForm(FlaskForm):
         lista = []
         adjust = []
         for i in range(n_earners):
-            steps = i
-            retorno = max_return-(step*steps)
-            gain = 1*retorno
+            steps=i
+            retorno=max_return-(step*steps)
+            gain=1*retorno
             count = pool_total-gain*contribution
-            pool_total = count
+            pool_total=count
             lista.append(gain)
             adjust.append(count)
         *_, last = adjust
-        remaining = last/n_earners/100
+        remaining=last/n_players/contribution
         distribution = [x+remaining for x in lista]
-        tail = [-1 for i in range(losers)]
-        distribution = distribution+tail
+        tail= [-1 for i in range(losers)]
+        distribution=distribution+tail
         return distribution

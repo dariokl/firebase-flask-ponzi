@@ -11,13 +11,6 @@
 {% endblock %} {% block content %}
 
 <div class="mobilebar-container mobile-layout">
-  <nav class="mobilebar-tab">
-    <div id="applicationBarMobileButton1" class="mobilebar-tab-item active">
-      <span class="nes-textarea mobilebar-tab__icon">
-        Invite
-        <i class="fa share"></i>
-      </span>
-    </div>
 
     <div class="mobilebar-tab-item">
       <span class="nes-textarea mobilebar-tab__icon">
@@ -25,16 +18,7 @@
         <i class="fa coin"></i>
       </span>
     </div>
-
-    <div class="mobilebar-tab-item">
-      <span class="mobilebar-tab__icon nes-textarea"
-        >10 in
-        <i class="fas chair"></i>
-      </span>
-    </div>
-
     <div class="mobilebar-tab-overlay"></div>
-  </nav>
 </div>
 .
 <!--:-->
@@ -117,7 +101,7 @@
       }
     });
 
-    // Checking if player already started his game , if so loading up HTML to remove 
+    // Checking if player already started his game , if so loading up HTML to remove
     // one second delay inside the runTimer function and starting the function itself.
     if (sec !== null) {
       $("#seconds").html(pad(++sec % 60));
