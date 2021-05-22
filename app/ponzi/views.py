@@ -72,7 +72,6 @@ def home():
 
     return render_template('index.html', games=games, create_rooms=create_rooms)
 
-
 @view.route('/join/<room_key>')
 def join(room_key):
     # Clearing all previous sessions.
@@ -125,6 +124,11 @@ def ponzi():
     if form.validate_on_submit() and request.method == 'POST':
         crud_user.set_timer(db, time.time())
         # Moving the amount of guesses
+        if session['guesses'] <= 1:
+            crud_user.end_timer(db, time.time(), failed=True)
+            crud_game.add_solved(db, session['room_key'])
+            crud_game.check_game_status(db, session['room_key'])
+            return redirect(url_for('ponzi.rank', room_key=session['room_key']))
         session['guesses'] -= 1
          # The number that player has on form input.
         guess = request.form['guess']
@@ -157,8 +161,7 @@ def ponzi():
             session['messages'].append('You got it !')
             return redirect(url_for('ponzi.rank', room_key=session['room_key']))
         
-        if session['guesses'] <= 0:
-            return redirect(url_for("ponzi.home"))
+
 
         return redirect(url_for('ponzi.ponzi'))
 
@@ -166,10 +169,9 @@ def ponzi():
                            notification=zip(session['messages'], session['guess']))
 
 
-
 @view.route('/rank/<room_key>')
 def rank(room_key):
-    crud_user.set_position(db)
+    crud_user.set_position(db, room_key)
 
     return render_template('ranking.html', room_key=room_key)
 

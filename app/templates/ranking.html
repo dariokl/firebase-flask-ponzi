@@ -46,13 +46,7 @@
   $(document).ready(function () {
       // LEAVE THE CONFIG HERE
   var firebase_config = {
-  "apiKey": "AIzaSyCulR0OlEN-dCRPxVsx16paDmbZef-x1gI",
-  "authDomain": "test-90b1b.firebaseapp.com",
-  "databaseURL": "https://test-90b1b-default-rtdb.europe-west1.firebasedatabase.app",
-  "projectId": "test-90b1b",
-  "storageBucket": "test-90b1b.appspot.com",
-  "messagingSenderId": "1085178731342",
-  "appId": "1:1085178731342:web:56a11a11b07b25916fdc1f"
+
   }
   $('.nes-table-responsive').hide()
   localStorage.removeItem('sec')
@@ -62,6 +56,13 @@
       var number = $('.flashes')
       var reveal = $('.reveal')
       var table = $('.nes-table-responsive')
+      // Using if operator just in case user decide to refresh the page
+      // Entering message will be removed and ranking table will be displayed.
+      if (!number.first().text()){
+        table.show()
+        enterScreen.hide()
+      }
+      else {
       enterScreen.show()
       number.hide()
       reveal.text(number.first().text())
@@ -70,10 +71,11 @@
         enterScreen.fadeOut()
         table.show()
       }, 5000)
-      
+      }
   }
 
   revealNumber()
+
   firebase.initializeApp(firebase_config);
 
   var rank = firebase.database().ref().child('game').child(room_key).child('players');
@@ -86,13 +88,15 @@
                   "<td>" +
                   element.val()['name'] +
                   "<td>"
-                  + element.val()['gain'] +
+                  + element.val()['earning'] + '$' + 
                   "<td>"
                   + element.val()['end_time'] +
                   "</td></td></td></td></tr>")
           }});
       })
+
   })
+
 </script>
 
 {% endblock %}

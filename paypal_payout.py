@@ -1,0 +1,29 @@
+from paypalpayoutssdk.core import PayPalHttpClient, SandboxEnvironment
+from paypalpayoutssdk.payouts import PayoutsPostRequest
+from paypalhttp import HttpError
+
+# Creating Access Token for Sandbox
+client_id = ""
+client_secret = ""
+# Creating an environment
+environment = SandboxEnvironment(
+    client_id=client_id, client_secret=client_secret)
+client = PayPalHttpClient(environment)
+
+
+request = PayoutsPostRequest()
+
+
+def payout(body):
+    request.request_body(body)
+    try:
+        # Call API with your client and get a response for your call
+        response = client.execute(request)
+        # If call returns body in response, you can get the deserialized version from the result attribute of the response
+        batch_id = response.result.batch_header.payout_batch_id
+        print(batch_id)
+    except IOError as ioe:
+        print(ioe)
+        if isinstance(ioe, HttpError):
+            # Something went wrong server-side
+            print(ioe.status_code)
