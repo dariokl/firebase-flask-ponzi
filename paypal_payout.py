@@ -3,8 +3,8 @@ from paypalpayoutssdk.payouts import PayoutsPostRequest
 from paypalhttp import HttpError
 
 # Creating Access Token for Sandbox
-client_id = "AarqWz6bcrYz7vnNFuWFdL9w5PRPg6XsD72AdQrVy9-xGFiMt2nNufHIPxMP1K9otX8pdQVzHl8geOyb"
-client_secret = "EJYwTGXDQ4r6RZXlHDJ1chVa5gnqS2zN7FI4DxUgNGhghzavJFyrKZ22shNzvtr0D1991t4aQH5S7SW4"
+client_id = "ATxmnk80cPKjOX0vnD52zBfqxy5415Emu9jfZslayMiOsKWl6a0UVs2vIQjFCNdOUrc3ElejyRjw1JaU"
+client_secret = "EPkxfW8RyIc2IA1Si0zsXh2REwEJvLjxUwCVmTB32UoiICStIIhdX12aV4s3F7NoT6haDySwE1rASdtL"
 # Creating an environment
 environment = SandboxEnvironment(
     client_id=client_id, client_secret=client_secret)
