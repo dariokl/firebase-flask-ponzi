@@ -31,7 +31,7 @@ def register_scheduler(app):
     scheduler.start()
 
 
-    @scheduler.task('cron', id='do_db_payout', second='30')
+    @scheduler.task('cron', id='do_db_payout', hour='1')
     def db_payout():
         """
         Scheduled payout function that will be ran on desired interval.
