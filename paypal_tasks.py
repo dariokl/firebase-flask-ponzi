@@ -49,7 +49,7 @@ def register_scheduler(app):
             print(payout_obj.val()['closed'])
             for player_data in payout_obj.val()['payouts']:
                 item_obj = {
-                    "note": f"Your 1$ Payout!",
+                    "note": f"Your Ponzi Payout!",
                     "amount": {
                         "currency": "USD",
                         "value": ""
@@ -64,9 +64,10 @@ def register_scheduler(app):
                 body['items'].append(item_obj)
 
         payout(body)
+        body['items'].clear()
 
         for payout_obj in payouts.each():
-            game = db.child('payouts').child(payout_obj.key()).update({'closed': True})
+            game = db.child('payouts').child(payout_obj.key()).update({'closed':True})
 
 
         print('Payout task completed !')
