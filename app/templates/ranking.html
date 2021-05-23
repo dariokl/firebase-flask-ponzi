@@ -64,6 +64,13 @@ appId: "1:475670648946:web:70d30ab9a2dc86846a4aeb"
       var number = $('.flashes')
       var reveal = $('.reveal')
       var table = $('.nes-table-responsive')
+      // Using if operator just in case user decide to refresh the page
+      // Entering message will be removed and ranking table will be displayed.
+      if (!number.first().text()){
+        table.show()
+        enterScreen.hide()
+      }
+      else {
       enterScreen.show()
       number.hide()
       reveal.text(number.first().text())
@@ -72,10 +79,15 @@ appId: "1:475670648946:web:70d30ab9a2dc86846a4aeb"
         enterScreen.fadeOut()
         table.show()
       }, 5000)
+<<<<<<< HEAD
 
+=======
+      }
+>>>>>>> f3dd217620e670d22ff1ff6b06cbc6e75d26a40e
   }
 
   revealNumber()
+
   firebase.initializeApp(firebase_config);
 
   var rank = firebase.database().ref().child('game').child(room_key).child('players');
@@ -88,13 +100,19 @@ appId: "1:475670648946:web:70d30ab9a2dc86846a4aeb"
                   "<td>" +
                   element.val()['name'] +
                   "<td>"
+<<<<<<< HEAD
                   + element.val()['gain']*100 +"%"
+=======
+                  + element.val()['earning'] + '$' + 
+>>>>>>> f3dd217620e670d22ff1ff6b06cbc6e75d26a40e
                   "<td>"
                   + element.val()['end_time'] +
                   "</td></td></td></td></tr>")
           }});
       })
+
   })
+
 </script>
 
 {% endblock %}
