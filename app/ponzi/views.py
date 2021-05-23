@@ -43,7 +43,7 @@ def create_room():
             data['n_losers'] = form.n_losers.data
             data['contribution'] = form.contribution.data
             data['max_return'] = form.max_return.data/100
-            data['guesses'] = form.guesses.data
+            data['guesses'] = int(form.guesses.data)
             distibution=form.distribution(data['allowed_players'],data['n_losers'],data['contribution'],data['max_return'])
             data['distribution'] = dict(zip(range(1,len(distibution)+1),distibution))
             # We can add separate class from Games instead of using User class, for now its obsolete.
@@ -162,14 +162,12 @@ def ponzi():
             flash (number_to_guess)
             session['messages'].append('You got it !')
             return redirect(url_for('ponzi.rank', room_key=session['room_key']))
-<<<<<<< HEAD
 
         if session['guesses'] <= 0:
             return redirect(url_for("ponzi.home"))
-=======
-        
 
->>>>>>> f3dd217620e670d22ff1ff6b06cbc6e75d26a40e
+
+
 
         return redirect(url_for('ponzi.ponzi'))
 
