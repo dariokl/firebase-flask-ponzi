@@ -45,6 +45,16 @@ def db_payout():
     that has propery "closed" set to false wich means that payments
     for players in those collections are not issued.
     """
+    body = {
+    "sender_batch_header": {
+        "recipient_type": "EMAIL",
+        "email_message": "Generic message.",
+        "note": "Enjoy your Payout!",
+        "sender_batch_id": "",
+        "email_subject": "Your Ponzi.com payout enjoy your earnings !"
+    },
+    "items": [],
+    }
     now = datetime.now()
     date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
     body['sender_batch_header']['sender_batch_id'] = date_time
