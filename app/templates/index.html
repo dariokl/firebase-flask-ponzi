@@ -57,7 +57,7 @@
 </style>
 <div class="nes-container with-title">
 	{% if create_rooms %}
-	<p class="title nes-text is-error">Create new Room</p>
+	<p class="title nes-text is-error">Create New Room</p>
 	<div style='display: flex; align-items: center; justify-content: center;'>
 		<a href="{{url_for('ponzi.create_room')}}">
 		<button type="button" class="nes-btn is-primary">Create New Room</button>
@@ -88,16 +88,16 @@
 
 	</div>
 
-	{% elif game.val().game_type == 'Ignatova' %}
+	{% elif game.val().game_type == 'Ignatova' and game.val().status != 'CLOSED' %}
 
 	<div class="nes-container is-rounded">
 		<img src="https://res.cloudinary.com/dqenlmcw2/image/upload/v1621203027/ignatova.svg" />
 		<h2>Ignatova Room</h2>
-		<p>Low Risk. Low Reward</p>
+		<p>Very High Risk. High Reward</p>
 
-		<a href="#" class="nes-badge"> <span class="is-primary">OPEN</span>
+		<a class="nes-badge"> <span class="is-primary">OPEN</span>
 		</a><a href="{{url_for('ponzi.join', room_key=game.key())}}" id='btn-link'">
-		<button class="nes-btn" style="
+		<button class="nes-btn" href="{{url_for('ponzi.join', room_key=game.key())}}" style="
 	  --ns-bg-color: hsl(323,71%,86%);
 	  --ns-shadow-color:hsl(323,71%,76%);
 	  --ns-border:8px;
@@ -106,17 +106,17 @@
 
 	</div>
 
-	{% elif game.val().game_type == 'Maddof' %}
+	{% elif game.val().game_type == 'Maddof'  and game.val().status != 'CLOSED' %}
 
 	<div class="nes-container is-rounded">
-		<img class="madoff"
+		<img
 			src="https://res.cloudinary.com/dqenlmcw2/image/upload/v1621203026/pxArt_8_as0ueg.svg" />
 		<h2>Madoff Room</h2>
-		<p>High Risk. Medium Reward</p>
+		<p>Low Risk. Medium Reward</p>
 
-		<a href="#" class="nes-badge"> <span class="is-primary">OPEN</span>
+		<a class="nes-badge"> <span class="is-primary">OPEN</span>
 		</a><a href="{{url_for('ponzi.join', room_key=game.key())}}" id='btn-link'">
-		<button class="nes-btn" style="
+		<button class="nes-btn" href="{{url_for('ponzi.join', room_key=game.key())}}" style="
 	  --ns-bg-color: hsl(323,71%,86%);
 	  --ns-shadow-color:hsl(323,71%,76%);
 	  --ns-border:8px;
@@ -125,17 +125,16 @@
 
 	</div>
 
-	{% elif game.val().game_type == 'Rossem' %}
+	{% elif game.val().game_type == 'Rossem'  and game.val().status != 'CLOSED' %}
 
 	<div class="nes-container is-rounded">
-		<img class="madoff"
-			src="https://res.cloudinary.com/dqenlmcw2/image/upload/v1621203027/pxArt_2_ejermd.svg" />
+		<img src="https://res.cloudinary.com/dqenlmcw2/image/upload/v1621203027/pxArt_2_ejermd.svg" />
 		<h2>Van Rossem Room</h2>
 		<p>Medium Risk. Medium Reward</p>
 
-		<a href="#" class="nes-badge"> <span class="is-primary">OPEN</span>
+		<a class="nes-badge"> <span class="is-primary">OPEN</span>
 		</a><a href="{{url_for('ponzi.join', room_key=game.key())}}" id='btn-link'">
-		<button class="nes-btn" style="
+		<button class="nes-btn" href="{{url_for('ponzi.join', room_key=game.key())}}" style="
 	  --ns-bg-color: hsl(323,71%,86%);
 	  --ns-shadow-color:hsl(323,71%,76%);
 	  --ns-border:8px;
