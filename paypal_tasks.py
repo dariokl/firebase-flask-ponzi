@@ -37,7 +37,7 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 scheduler = BlockingScheduler()
 
 
-@scheduler.task('cron', id='do_db_payout', second=30)
+@scheduler.scheduled_job('cron', id='do_db_payout', second=30)
 def db_payout():
     """
     Scheduled payout function that will be ran on desired interval.
