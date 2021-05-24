@@ -12,7 +12,7 @@ def create_app(config_name):
     app.config.from_object(config_module)
     config_module.init_app(app)
 
-    #register_scheduler(app)
+#    register_scheduler(app)
 
     # Initialize blueprints
     from .ponzi import ponzibp as ponzi_blueprint

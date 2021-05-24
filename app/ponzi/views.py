@@ -58,7 +58,7 @@ def create_room():
             # We can add separate class from Games instead of using User class, for now its obsolete.
             crud_game.create_new_game(db, data)
             flash('Successfuly created New Game')
-            return redirect(url_for('ponzi.home'))
+            return redirect(url_for('ponzi.rooms'))
         else:
             flash ('Maximum amout of opened rooms reached, please try again later !')
 
@@ -66,7 +66,12 @@ def create_room():
 
 
 @view.route('/')
-def home():
+def index():
+
+    return render_template('index.html')
+
+@view.route('/rooms')
+def rooms():
     games = db.child('game').get()
     create_rooms = db.child('game').order_by_child('status').equal_to('OPEN').get()
 
@@ -79,7 +84,7 @@ def home():
     if games.val() == None:
         games = []
 
-    return render_template('index.html', games=games, create_rooms=create_rooms)
+    return render_template('rooms.html', games=games, create_rooms=create_rooms)
 
 @view.route('/join/<room_key>')
 def join(room_key):
@@ -173,9 +178,7 @@ def ponzi():
             return redirect(url_for('ponzi.rank', room_key=session['room_key']))
 
         if session['guesses'] <= 0:
-            return redirect(url_for("ponzi.home"))
-
-
+            return redirect(url_for("ponzi.rooms"))
 
 
         return redirect(url_for('ponzi.ponzi'))
