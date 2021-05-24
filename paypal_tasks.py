@@ -1,4 +1,5 @@
-from flask_apscheduler import APScheduler
+#from flask_apscheduler import APScheduler
+from apscheduler.schedulers.blocking import BlockingScheduler
 
 from app.firebase_utils.db import db
 
@@ -7,32 +8,28 @@ from datetime import datetime
 from paypal_payout import payout
 
 
-def register_scheduler(app):
-    """
-    Function to register flask scheduler that can run cron functions on desired
-    interval.
-    """
+#def register_scheduler(app):
+
 
     # The body of payouts request , checking python paypal-checkouts-serversdk documation,
     # holds more information about the request body and details that should body cointain.
-    body = {
-    "sender_batch_header": {
-        "recipient_type": "EMAIL",
-        "email_message": "Generic message.",
-        "note": "Enjoy your Payout!",
-        "sender_batch_id": "",
-        "email_subject": "Your Ponzi.com payout enjoy your earnings !"
-    },
-    "items": [],
-    }
+    #body = {
+    #"sender_batch_header": {
+    #    "recipient_type": "EMAIL",
+    #    "email_message": "Generic message.",
+    #    "note": "Enjoy your Payout!",
+    #    "sender_batch_id": "",
+    #    "email_subject": "Your Ponzi.com payout enjoy your earnings !"
+    #},
+    #"items": [],
+    #}
 
-    scheduler = APScheduler()  # Use default scheduler: BackgroundScheduler
-    scheduler.init_app(app)
-    scheduler.start()
+    #scheduler = APScheduler()  # Use default scheduler: BackgroundScheduler
+    #scheduler.init_app(app)
+    #scheduler.start()
 
 
 
-from apscheduler.schedulers.blocking import BlockingScheduler
 
 scheduler = BlockingScheduler()
 
