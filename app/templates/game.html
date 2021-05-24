@@ -11,13 +11,6 @@
 {% endblock %} {% block content %}
 
 <div class="mobilebar-container mobile-layout">
-  <nav class="mobilebar-tab">
-    <div id="applicationBarMobileButton1" class="mobilebar-tab-item active">
-      <span class="nes-textarea mobilebar-tab__icon">
-        Invite
-        <i class="fa share"></i>
-      </span>
-    </div>
 
     <div class="mobilebar-tab-item">
       <span class="nes-textarea mobilebar-tab__icon">
@@ -25,16 +18,7 @@
         <i class="fa coin"></i>
       </span>
     </div>
-
-    <div class="mobilebar-tab-item">
-      <span class="mobilebar-tab__icon nes-textarea"
-        >10 in
-        <i class="fas chair"></i>
-      </span>
-    </div>
-
     <div class="mobilebar-tab-overlay"></div>
-  </nav>
 </div>
 .
 <!--:-->
@@ -52,7 +36,7 @@
   </div>
 </div>
 <h1><span id="minutes">00</span> min <span id="seconds">00</span> sec</h1>
-{{counter}} - {{number}} {{messagess}}
+Tries: {{counter}} -{{messagess}}
 <!--Make sure the form has the autocomplete function switched off:-->
 <form method="POST" id="guessForm">
   {{ form.csrf_token }}
@@ -117,7 +101,7 @@
       }
     });
 
-    // Checking if player already started his game , if so loading up HTML to remove 
+    // Checking if player already started his game , if so loading up HTML to remove
     // one second delay inside the runTimer function and starting the function itself.
     if (sec !== null) {
       $("#seconds").html(pad(++sec % 60));

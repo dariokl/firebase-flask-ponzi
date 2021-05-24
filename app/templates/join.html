@@ -87,24 +87,29 @@
 	}
 
 	li {
-		margin-bottom: 20px;
+		margin-bottom:17px;
 		list-style: none;
 	}
+
+	#load{
+    width:100%;
+    height:100%;
+    position:fixed;
+    z-index:9999;
+    background:url("https://thumbs.gfycat.com/SinfulHalfBagworm-size_restricted.gif") no-repeat left center rgba(0,0,0,0.25)
+}
 </style>
+<div id="load"></div>
 <div class="nes-container is-rounded is-first-step">
 	<div>
-		<p class="comment">You will have to figure out the 3-digit number by sending guesses. No leading 0s or repeated
+		<p class="comment">Remember! Yoy will have to figure out the 3-digit number by sending guesses. No leading 0s or repeated
 			numbers are allowed. </p>
-		<p class="comment">The symbol 🧨 means those
-			numbers are in the secret number but in a different position. 💥 means the numbers are present and in the
-			right
-			position. You ought to find out each number and its position.</p>
 	</div>
 	<h2>Distribution</h2>
-	<div style="position:absolute;left:70%;bottom: 195px;">
+	<div style="position:absolute;left:60%;bottom: 135px;">
 
 		<ul>
-			{% for distribution in distribution_chart[:-1] %}
+			{% for distribution in distribution_chart %}
 
 			<li>{{distribution}}%</li>
 
@@ -114,13 +119,21 @@
 	</div>
 	<div>
 
-		{% for distribution in distribution_chart[:-1] %}
+		{% for distribution in distribution_chart
+					if distribution>=0
+
+			 %}
+
 		<progress class="nes-progress is-primary" value="{{distribution}}" max="100"></progress>
 		{% endfor %}
+		{% for distribution in distribution_chart
+					if distribution<0
 
-		TOTAL LOSS
+			 %}
 
-		<progress class="nes-progress is-error" value="100" max="100"></progress>
+		<progress class="nes-progress is-error" value="{{distribution*-1}}" max="100"></progress>
+		{% endfor %}
+
 	</div>
 	<p class="comment">Here is the distribution of returns. If you agree:</p>
 	</br>
@@ -392,7 +405,7 @@
 
 
 <script
-	src="https://www.paypal.com/sdk/js?client-id=&disable-funding=credit,card"> // Required. Replace YOUR_CLIENT_ID with your sandbox client ID.
+	src="https://www.paypal.com/sdk/js?client-id=AarqWz6bcrYz7vnNFuWFdL9w5PRPg6XsD72AdQrVy9-xGFiMt2nNufHIPxMP1K9otX8pdQVzHl8geOyb&disable-funding=credit,card"> // Required. Replace YOUR_CLIENT_ID with your sandbox client ID.
 </script>
 
 <script type="text/javascript" charset="utf-8">
@@ -400,10 +413,18 @@
 	var room_key = {{ room_key| tojson}}
 	var contribution = {{ contribution| tojson }}
 
+	document.onreadystatechange = function () {
+	  var state = document.readyState
+	  if (state == 'complete') {
+	         document.getElementById('interactive');
+	         document.getElementById('load').style.visibility="hidden";
+	  }
+	}
+
 	$(document).ready(function () {
 		// LEAVE THE CONFIG HERE
 		var firebase_config = {
-
+	
 
 		}
 
@@ -479,10 +500,10 @@
 								'room_key': room_key
 							})
 					}).then((response) => {
-						// Future implementation should contain response status check , etc response.status === 201 and continue with 
+						// Future implementation should contain response status check , etc response.status === 201 and continue with
 						// the singup process else show error to player.
 
-						// This firebase check is used just so that last player that checks in doesnt have 
+						// This firebase check is used just so that last player that checks in doesnt have
 						dbAllowedPlayers.once('value', snap => {
 							if (snap.val() == 0) {
 								secondStep.fadeOut()

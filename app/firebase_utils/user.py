@@ -90,7 +90,7 @@ class User():
 
     def distribute_gain(self, db, player_key, position, room_key):
         """
-        Distribution function , even tough it looks pretty huge 
+        Distribution function , even tough it looks pretty huge
         the purpouse of this function is pretty simple to compare
         key value from distribution with position of player and update
         the gain and earning property based on distribution value.
@@ -100,9 +100,9 @@ class User():
         contribution = db.child('game').child(
             room_key).child('contribution').get()
         try:
-            whole = contribution.val() * 2
-            part = distribution.val()[position] * 100
-            earning = int((part * whole) / 100)
+            whole = contribution.val()
+            part = distribution.val()[position]
+            earning = int((part * whole)+whole)
             if earning > 0:
                 db.child('game').child(room_key).child('players').child(
                     player_key).update({'gain': distribution.val()[position]})

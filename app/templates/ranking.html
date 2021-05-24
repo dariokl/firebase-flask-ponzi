@@ -20,10 +20,10 @@
         <div class="nes-balloon from-left">
             <p >The number that solves puzzle was <strong class='reveal'></strong></p>
           </div>
-        <i class="nes-bcrikko" style='margin-right: 100%'></i>
+        <img src="https://res.cloudinary.com/dqenlmcw2/image/upload/c_scale,w_100/v1621203027/ponzi.svg">
         <!-- Balloon -->
       </section>
-  
+
     </section>
   </section>
 
@@ -39,6 +39,7 @@
       <th>End Time</th>
     </tr>
   </table>
+  <a href="/"><button class="nes-btn is-success">Back Home</button></a>
 </div>
 
 <script>
@@ -46,6 +47,8 @@
   $(document).ready(function () {
       // LEAVE THE CONFIG HERE
   var firebase_config = {
+
+
 
   }
   $('.nes-table-responsive').hide()
@@ -71,7 +74,11 @@
         enterScreen.fadeOut()
         table.show()
       }, 5000)
+
+
+
       }
+
   }
 
   revealNumber()
@@ -88,7 +95,8 @@
                   "<td>" +
                   element.val()['name'] +
                   "<td>"
-                  + element.val()['earning'] + '$' + 
+                  + element.val()['gain']*100 +"%---"
+                  + element.val()['earning'] + '$' +
                   "<td>"
                   + element.val()['end_time'] +
                   "</td></td></td></td></tr>")

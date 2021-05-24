@@ -28,9 +28,9 @@
     {{form.allowed_players.label}}
     {{form.allowed_players(class='nes-input')}}
   </div>
-  <div class='nes-field'>
+  <div class='nes-select'>
     {{form.guesses.label}}
-    {{form.guesses(class='nes-input')}}
+    {{form.guesses(class='nes-select')}}
   </div>
   <div class='nes-field'>
     {{form.n_losers.label}}
@@ -44,10 +44,7 @@
     {{form.max_return.label}}
     {{form.max_return(class='nes-input')}}
   </div>
-  <div class="nes-select">
-    {{form.game_type.label}}
-    {{form.game_type(class='nes-select')}}
-  </div>
+
   <div>
     <button type='submit'  class='nes-btn is-success' style='margin-top: 1rem;'> Create Game </button>
   </div>
