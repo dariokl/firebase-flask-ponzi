@@ -15,12 +15,13 @@ from ..firebase_utils.db import db
 @view.route('/create-room', methods=['POST', 'GET'])
 def create_room():
     data = {
-        'game_type': '',
+        'game_type': 'Ponzi',
         'allowed_players': 0,
         'players': "{}",
         'total_players': 0,
         'ready': 0,
         'distribution': "{}",
+        'skewness':0,
         'guesses': 0,
         'n_losers':0,
         'contribution':0,
@@ -37,15 +38,23 @@ def create_room():
 
         if len(create_rooms.val()) <= 6:
             # Editing the game data object.
-            data['game_type'] = form.game_type.data
             data['allowed_players'] = form.allowed_players.data
             data['max_players'] = form.allowed_players.data
             data['n_losers'] = form.n_losers.data
             data['contribution'] = form.contribution.data
             data['max_return'] = form.max_return.data/100
             data['guesses'] = int(form.guesses.data)
-            distibution=form.distribution(data['allowed_players'],data['n_losers'],data['contribution'],data['max_return'])
+            distibution, skewness=form.distribution(data['allowed_players'],data['n_losers'],data['contribution'],data['max_return'])
             data['distribution'] = dict(zip(range(1,len(distibution)+1),distibution))
+            data['skewness'] = skewness
+            if skewness < 4:
+                data['game_type'] = 'Maddof'
+            elif skewness <=6:
+                data['game_type'] = 'Rossem'
+            elif skewness <=9:
+                data['game_type'] = 'Ponzi'
+            else:
+                data['game_type'] = 'Ignatova'
             # We can add separate class from Games instead of using User class, for now its obsolete.
             crud_game.create_new_game(db, data)
             flash('Successfuly created New Game')

@@ -4,10 +4,8 @@ from wtforms import StringField, SubmitField, IntegerField, SelectField, Validat
 from wtforms.validators import DataRequired, NumberRange, Length, Regexp
 
 import math
+from math import acos, degrees
 
-
-GAME_TYPES = [('Ponzi', 'Ponzi Room'), ('Ignatova', 'Ignatova Room'), ('Maddof', 'Maddoff Room')
-        ,('Rossem', 'Van Rossem Room')]
 
 class GuessForm(FlaskForm):
     guess = StringField('name', validators=[
@@ -15,7 +13,6 @@ class GuessForm(FlaskForm):
 
 
 class GameForm(FlaskForm):
-    game_type = SelectField('Type of Game', choices=GAME_TYPES)
     allowed_players = IntegerField('Number of participants')
     guesses = SelectField('# of Guesses', choices=[50,100])
     n_losers = IntegerField('How many lose all money?')
@@ -52,4 +49,5 @@ class GameForm(FlaskForm):
       distribution = [x+adjust for x in lista]
       tail= [-1 for i in range(losers)]
       distribution=distribution+tail
-      return distribution
+      degree=degrees(math.asin(distribution[0]/hyp))
+      return distribution,degree

@@ -114,14 +114,14 @@
 		<h2>Madoff Room</h2>
 		<p>High Risk. Medium Reward</p>
 
-		<a href="#" class="nes-badge is-error"> <span class="is-error">CLOSED</span>
-		</a>
-		<button class="nes-btn is-disabled" style="
+		<a href="#" class="nes-badge"> <span class="is-primary">OPEN</span>
+		</a><a href="{{url_for('ponzi.join', room_key=game.key())}}" id='btn-link'">
+		<button class="nes-btn" style="
 	  --ns-bg-color: hsl(323,71%,86%);
 	  --ns-shadow-color:hsl(323,71%,76%);
 	  --ns-border:8px;
 	  --ns-border-color:#51352f;
-									 color:hsl(323,71%,70%);                               ">Enter</button>
+									 color:hsl(323,71%,70%);                               ">Enter</button></a>
 
 	</div>
 
@@ -133,14 +133,14 @@
 		<h2>Van Rossem Room</h2>
 		<p>Medium Risk. Medium Reward</p>
 
-		<a href="#" class="nes-badge is-error"> <span class="is-warning">ONGOING</span>
-		</a>
-		<button class="nes-btn is-disabled" style="
+		<a href="#" class="nes-badge"> <span class="is-primary">OPEN</span>
+		</a><a href="{{url_for('ponzi.join', room_key=game.key())}}" id='btn-link'">
+		<button class="nes-btn" style="
 	  --ns-bg-color: hsl(323,71%,86%);
 	  --ns-shadow-color:hsl(323,71%,76%);
 	  --ns-border:8px;
 	  --ns-border-color:#51352f;
-		color:hsl(323,71%,70%);                               ">Enter</button>
+		color:hsl(323,71%,70%);                               ">Enter</button></a>
 
 	</div>
 	{% endif %}
