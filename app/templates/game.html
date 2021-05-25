@@ -8,6 +8,7 @@
   rel="stylesheet"
 />
 <link rel="stylesheet" href="/static/css/core.css" />
+<script src="/static/reverse.js" charset="utf-8"></script>
 {% endblock %} {% block content %}
 
 <div class="mobilebar-container mobile-layout">
@@ -26,32 +27,17 @@
 <div class="square-container">
   <div id="cube">
     <div class="front">?</div>
-    <div class="back">1</div>
-    <div class="right">9</div>
-    <div class="left">7</div>
-    <div class="top">0</div>
-    <div class="bottom">5</div>
   </div>
 </div>
 
 <div class="square-container">
   <div id="cube">
     <div class="front">?</div>
-    <div class="back">2</div>
-    <div class="right">8</div>
-    <div class="left">7</div>
-    <div class="top">4</div>
-    <div class="bottom">5</div>
   </div>
 </div>
 <div class="square-container">
   <div id="cube">
     <div class="front">?</div>
-    <div class="back">6</div>
-    <div class="right">3</div>
-    <div class="left">7</div>
-    <div class="top">1</div>
-    <div class="bottom">5</div>
   </div>
 </div>
 </div>
@@ -79,15 +65,21 @@ Tries: {{counter}} -{{messagess}}
     class="nes-table is-bordered is-centered"
     style="width: 100%; overflow-x: auto"
   >
+  <tr>
+  <thead>  <th>Guess</th>
+    <th>Result</th></thead>
+  </tr>
     {% for message, guess in notification %}
-    <tr>
-      <th>{{guess}}</th>
-      <th>{{message}}</th>
-    </tr>
+  <tbody><tr>
+   <td>{{guess}}</td>
+     <td>{{message}}</td>
+  </tr></tbody>
     {% endfor %}
   </table>
 </div>
 <script>
+
+
   $(document).ready(function () {
 
     // Function to calcaute seconds between the start of the game and current time.
@@ -131,6 +123,7 @@ Tries: {{counter}} -{{messagess}}
       runTimer();
     }
   });
+
 </script>
 
 {% endblock %}
