@@ -67,14 +67,14 @@ Tries: {{counter}} -{{messagess}}
   <tr>
   <thead>  <th>Guess</th>
     <th>Result</th></thead>
-  </tr>
+  </tr><tbody>
     {% for message, guess in notification %}
-  <tbody><tr>
+  <tr>
    <td>{{guess}}</td>
      <td>{{message}}</td>
-  </tr></tbody>
+  </tr>
     {% endfor %}
-  </table>
+  </tbody></table>
 </div>
 <script>
 
@@ -115,6 +115,7 @@ Tries: {{counter}} -{{messagess}}
       }
     });
 
+
     // Checking if player already started his game , if so loading up HTML to remove
     // one second delay inside the runTimer function and starting the function itself.
     if (sec !== null) {
@@ -124,6 +125,13 @@ Tries: {{counter}} -{{messagess}}
     }
   });
 
+  $(function(){
+      $("tbody").each(function(elem,index){
+        var arr = $.makeArray($("tr",this).detach());
+        arr.reverse();
+          $(this).append(arr);
+      });
+  });
 </script>
 
 {% endblock %}
