@@ -38,6 +38,38 @@
 
 	}
 
+	table{
+	  table-layout: fixed;
+	  width:100%;}
+
+	tr td:first-child {
+	  width: 20%;
+	  min-width: 20%;
+	  max-width: 20%;
+	  word-break: break-all;
+	}
+
+	tr td:second-child {
+	  width: 80%;
+	  min-width: 80%;
+	  max-width: 80%;
+	  word-break: break-all;
+	}
+
+	.nes-progress{
+	  height: 30px;
+
+	}
+	progress {
+	  text-align: center;
+	  position:relative;
+	}
+	progress.nes-progress:before {
+	  content: attr(value)'%';
+	  position:absolute;
+	  left:0;
+	  right:0;
+	}
 
 	.drop1,
 	.drop2 {
@@ -81,15 +113,7 @@
 		}
 	}
 
-	.nes-progress {
-		height: 30px;
 
-	}
-
-	li {
-		margin-bottom:17px;
-		list-style: none;
-	}
 
 	#load{
     width:100%;
@@ -106,34 +130,25 @@
 			numbers are allowed. </p>
 	</div>
 	<h2>Distribution</h2>
-	<div style="position:absolute;left:60%;bottom: 135px;">
 
-		<ul>
-			{% for distribution in distribution_chart %}
-
-			<li>{{distribution}}%</li>
-
-
-			{% endfor %}
-		</ul>
-	</div>
 	<div>
-
+  <table>
 		{% for distribution in distribution_chart
 					if distribution>=0
 
 			 %}
 
-		<progress class="nes-progress is-primary" value="{{distribution}}" max="100"></progress>
+	 		      <tr><td>#{{distribution_chart.index(distribution)+1}}</td><td>
+		<progress class="nes-progress is-primary" value="{{distribution}}" max="100"></progress></td></tr>
 		{% endfor %}
 		{% for distribution in distribution_chart
 					if distribution<0
 
 			 %}
-
-		<progress class="nes-progress is-error" value="{{distribution*-1}}" max="100"></progress>
+     <tr><td>#{{distribution_chart.index(distribution)+1}}</td><td>
+		<progress class="nes-progress is-error" value="{{distribution*-1}}" max="100"></progress></td></tr>
 		{% endfor %}
-
+  </table>
 	</div>
 	<p class="comment">Here is the distribution of returns. If you agree:</p>
 	</br>
@@ -388,6 +403,8 @@
 		</span>
 		players are in, waiting for other to join.
 	</p>
+	<a href='whatsapp://send?text=https://playponzi.app/join/{{room_key}}'><i class="nes-icon whatsapp is-medium"></i>
+Ask others!</a>
 </div>
 
 <div class="nes-container is-rounded is-ready-step">
