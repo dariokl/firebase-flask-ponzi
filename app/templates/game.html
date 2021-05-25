@@ -8,7 +8,6 @@
   rel="stylesheet"
 />
 <link rel="stylesheet" href="/static/css/core.css" />
-<script src="/static/reverse.js" charset="utf-8"></script>
 {% endblock %} {% block content %}
 
 <div class="mobilebar-container mobile-layout">
@@ -62,7 +61,7 @@ Tries: {{counter}} -{{messagess}}
 
 <div class="nes-table-responsive" style="padding: 10px">
   <table
-    class="nes-table is-bordered is-centered"
+    class="nes-table is-bordered is-centered results"
     style="width: 100%; overflow-x: auto"
   >
   <tr>
@@ -81,6 +80,7 @@ Tries: {{counter}} -{{messagess}}
 
 
   $(document).ready(function () {
+
 
     // Function to calcaute seconds between the start of the game and current time.
     function calculateSeconds() {
