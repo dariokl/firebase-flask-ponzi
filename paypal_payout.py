@@ -5,7 +5,7 @@ from paypalhttp import HttpError
 # Creating Access Token for Sandbox
 client_id = "ATxmnk80cPKjOX0vnD52zBfqxy5415Emu9jfZslayMiOsKWl6a0UVs2vIQjFCNdOUrc3ElejyRjw1JaU"
 client_secret = "EOpaPHENx02jBvB0U0KExZh-pSsyPTtYiipM_fiaNmDfmcfbMNV93h5wY49fidFDuhD-ZWmwQKFfCLqy"
-# Creating an environment
+# Creating an environment LiveEnvironment when ready
 environment = SandboxEnvironment(
     client_id=client_id, client_secret=client_secret)
 client = PayPalHttpClient(environment)

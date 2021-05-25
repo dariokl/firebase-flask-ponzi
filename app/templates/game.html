@@ -22,26 +22,48 @@
 </div>
 .
 <!--:-->
+<div class="grid">
 <div class="square-container">
-  <div class="square nes-textarea">
-    <div class="content"></div>
-  </div>
-
-  <div class="square nes-textarea">
-    <div class="content spread"></div>
-  </div>
-
-  <div class="square nes-textarea">
-    <div class="content column"></div>
+  <div id="cube">
+    <div class="front">?</div>
+    <div class="back">1</div>
+    <div class="right">9</div>
+    <div class="left">7</div>
+    <div class="top">0</div>
+    <div class="bottom">5</div>
   </div>
 </div>
+
+<div class="square-container">
+  <div id="cube">
+    <div class="front">?</div>
+    <div class="back">2</div>
+    <div class="right">8</div>
+    <div class="left">7</div>
+    <div class="top">4</div>
+    <div class="bottom">5</div>
+  </div>
+</div>
+<div class="square-container">
+  <div id="cube">
+    <div class="front">?</div>
+    <div class="back">6</div>
+    <div class="right">3</div>
+    <div class="left">7</div>
+    <div class="top">1</div>
+    <div class="bottom">5</div>
+  </div>
+</div>
+</div>
+<!--:-->
+
 <h1><span id="minutes">00</span> min <span id="seconds">00</span> sec</h1>
 Tries: {{counter}} -{{messagess}}
 <!--Make sure the form has the autocomplete function switched off:-->
 <form method="POST" id="guessForm">
   {{ form.csrf_token }}
   <div>
-    {{form.guess(class='nes-input', pattern="[0-9]*", inputmode='numeric',
+    {{form.guess(class='nes-input', pattern="[0-9]*", inputmode='numeric',autocomplete='off',
     placeholder='Guess')}}
   </div>
   <input
