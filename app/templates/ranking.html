@@ -18,7 +18,7 @@
     <section class="message-list">
       <section class="message -right">
         <div class="nes-balloon from-left">
-            <p >The number that solves puzzle was <strong class='reveal'></strong></p>
+            <p >You did it! The secret nuymber was <strong class='reveal'></strong></p>
           </div>
         <img src="https://res.cloudinary.com/dqenlmcw2/image/upload/c_scale,w_100/v1621203027/ponzi.svg">
         <!-- Balloon -->
@@ -39,6 +39,7 @@
       <th>End Time</th>
     </tr>
   </table>
+  <p>This ranking might change as more players finish. Save this links for your records</p>
   <a href="/"><button class="nes-btn is-success">Back Home</button></a>
 </div>
 
@@ -101,7 +102,7 @@
                   "<td>" +
                   element.val()['name'] +
                   "<td>"
-                  + element.val()['gain']*100 +"%---"
+                  + element.val()['gain']*100 +"% or "
                   + element.val()['earning'] + '$' +
                   "<td>"
                   + element.val()['end_time'] +

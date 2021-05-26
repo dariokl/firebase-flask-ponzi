@@ -6,7 +6,7 @@ from paypalhttp import HttpError
 client_id = "ASOFrSbPHGij0SWOwBghYvXvxp8eWPifcCxTjSJE0MZHVyh3dylfUMyrDxwPTFPCE13BPbIR_45r4ODu"
 client_secret = "EPoLvPnWFPOG0A5Dvy6JyhlWyq3o56uiJXH6XCV1aVHcNUlSsyv2drse-fvgLgzW1DNwAode6cNrjkwh"
 # Creating an environment LiveEnvironment when ready
-environment = LiveEnvironment(
+environment = SandboxEnvironment(
     client_id=client_id, client_secret=client_secret)
 client = PayPalHttpClient(environment)
 
