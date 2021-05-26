@@ -84,9 +84,22 @@
 	/* The typwriter cursor */
 	 margin: 0 auto;
 	/* Gives that scrolling effect as the typing happens */
-	 letter-spacing: 0.15em;
+	 letter-spacing: 0.1em;
 	/* Adjust as needed */
-	 animation: typing 3.5s steps(30, end), blink-caret 0.5s step-end infinite;
+	 animation: typing 3s steps(25, end), blink-caret 0.5s step-end infinite;
+}
+
+#page-one .second {
+  overflow: hidden;
+ /* Ensures the content is not revealed until the animation */
+  border-right: 0.1em solid orange;
+ /* The typwriter cursor */
+  margin: 0 auto;
+ /* Gives that scrolling effect as the typing happens */
+  letter-spacing: 0.1em;
+ /* Adjust as needed */
+  animation: typing 3s steps(30, end), blink-caret 0.5s step-end infinite;
+
 }
 /* The typing effect */
  @keyframes typing {
@@ -113,14 +126,12 @@
 {% block content %}
 <div id="page-one">
 	<img src="https://res.cloudinary.com/dqenlmcw2/image/upload/v1619402955/4a0d0ebaff754451bbb6c00485f94e13_opv8mk.png">
-  <h2 class="typewriter">A game for the greedy.<br>
-  	A pyramid-scheme you can trust
-  </h2>
+  <h2>A game for the greedy</h2>
+  <h2 class="second">A pyramid-scheme you can trust</h2>
 
 </div>
 <div id="page-two">
   <h2>Find the secret number...</h2>
-
 
   <section class="message-list container2">
     <section class="message -left">
@@ -199,8 +210,8 @@
 	<i class="nes-icon coin is-large"></i></div><br>
 	<a href="{{url_for('ponzi.rooms')}}" target="_self"><button type="button" class="nes-btn is-primary centered">PLAY</button></a><span class="centered">
 
-	<p>By pressing "PLAY" you accept our <a href="">cookie policy</a> and <a href="">terms of service</a></span</p>
-	<br><br><p>* You have to be 18 years or older to access this game.</p></div>
+	<p>By pressing "PLAY" you accept our <a href="https://www.termsfeed.com/live/59047443-f94d-41f5-b0fb-7a010a420348" target="_blank">cookie policy</a> and <a href="https://www.termsfeed.com/live/a21c4e90-6aca-4164-986d-b4e34a614952" target="_blank">terms of service</a></span</p>
+	<br><br><p>* You have to be 18 years or older to access this app.</p></div>
 </div>
 
 <script>
