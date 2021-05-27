@@ -558,7 +558,11 @@ Ask others!</a>
 
 		// Watching the ready value so game can be initialized once all players are ready
 		dbReady.on('value', snap => {
-			if (snap.val() == parseInt(maxPlayers.text())) {
+			if(parseInt(maxPlayers.text()) >= 5 && snap.val() >= 5) {
+				firebase.database().ref().child('game').child(room_key).update({ 'status': 'ONGOING' })
+				window.location.href = '/ponzi'
+			}
+			else if (snap.val() >= parseInt(maxPlayers.text())){
 				firebase.database().ref().child('game').child(room_key).update({ 'status': 'ONGOING' })
 				window.location.href = '/ponzi'
 			}
