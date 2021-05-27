@@ -422,7 +422,7 @@ Ask others!</a>
 
 
 <script
-	src="https://www.paypal.com/sdk/js?client-id=[]&disable-funding=credit,card"> // Required. Replace YOUR_CLIENT_ID with your sandbox client ID.
+	src="https://www.paypal.com/sdk/js?client-id=&disable-funding=credit,card"> // Required. Replace YOUR_CLIENT_ID with your sandbox client ID.
 </script>
 
 <script type="text/javascript" charset="utf-8">
@@ -442,8 +442,9 @@ Ask others!</a>
 		// LEAVE THE CONFIG HERE
 		var firebase_config = {
 
-
 		}
+
+		localStorage.removeItem('sec')
 
 		var center1, center2, playerCounter, readyCounter, maxPlayers
 		// Marking the jquery selectors to maintain some readability.
@@ -460,6 +461,7 @@ Ask others!</a>
 			email = $('#email')
 			playerName = $('#playerName')
 			totalGuesses = $('#totalGuesses')
+
 		}
 
 		Ready()
@@ -474,18 +476,21 @@ Ask others!</a>
 		var dbMaxPlayers = firebase.database().ref().child('game').child(room_key).child('max_players')
 		var dbtotalGuess = firebase.database().ref().child('game').child(room_key).child('guesses')
 		var dbAllowedPlayers = firebase.database().ref().child('game').child(room_key).child('allowed_players');
+		var dbTotalLosers = firebase.database().ref().child('game').child(room_key).child('n_losers');
+
 
 		dbTotalPlayers.on('value', snap => playerCounter.text(snap.val()))
 		dbReady.on('value', snap => readyCounter.val(snap.val()))
 		dbMaxPlayers.once('value', snap => { maxPlayers.text(snap.val()) })
 		dbtotalGuess.once('value', snap => { totalGuesses.text("You have " + snap.val() + " guess to solve this puzzle") })
-
-
+		var losers = dbTotalLosers.once('value', snap => { return snap.val() })
 		// First step is simple continue button comfirmation
 		$('#continue').on('click', function () {
 			firstStep.hide()
 			secondStep.fadeIn()
 		})
+
+
 
 		// Second step is gettng comfirmation of the payment for contribution to the game.
 		paypal.Buttons({
@@ -558,14 +563,13 @@ Ask others!</a>
 
 		// Watching the ready value so game can be initialized once all players are ready
 		dbReady.on('value', snap => {
-			if(parseInt(maxPlayers.text()) >= 5 && snap.val() >= 5) {
+			losers.then(response => {
+				var cutOff = parseInt(maxPlayers.text()) - response.val()
+				if (snap.val() >= cutOff){
 				firebase.database().ref().child('game').child(room_key).update({ 'status': 'ONGOING' })
 				window.location.href = '/ponzi'
-			}
-			else if (snap.val() >= parseInt(maxPlayers.text())){
-				firebase.database().ref().child('game').child(room_key).update({ 'status': 'ONGOING' })
-				window.location.href = '/ponzi'
-			}
+				}
+			})
 		})
 
 

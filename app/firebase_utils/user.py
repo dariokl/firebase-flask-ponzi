@@ -1,6 +1,7 @@
 from .db import db, player
 
 
+
 class User():
     def __init__(self):
         self.user_key = None
@@ -60,6 +61,10 @@ class User():
             # This should be maximum time set for the game to be solved.
             db.child('game').child(self.room_key).child('players').child(user_key).update(
                 {"end_time": 9999})
+
+    def expel_player(self, user_key):
+        db.child('game').child(self.room_key).child('players').child(user_key).update(
+            {"end_time": 9999})
 
 
     def set_position(self, db, room_key):
