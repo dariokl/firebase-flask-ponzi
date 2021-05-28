@@ -27,7 +27,7 @@ class Game():
         n_losers = db.child('game').child(room_key).child('n_losers').get().val()
 
         # The amount of players that will lose the game.
-        player_cutoff = counter - n_losers
+        player_cutoff = max_players - n_losers
         
         payouts = []
 

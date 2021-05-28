@@ -5,6 +5,7 @@ import datetime
 # Configuration goes here !!!
 firebase_config = {
 
+
 }
 
 

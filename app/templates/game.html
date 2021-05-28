@@ -77,9 +77,22 @@ Tries: {{counter}} -{{messagess}} {{number}}
   </tbody></table>
 </div>
 <script>
-
+  var room_key = {{ room_key| tojson}}
 
   $(document).ready(function () {
+       var firebase_config = {
+	  }
+
+    firebase.initializeApp(firebase_config);
+
+
+    var dbGameClosed = firebase.database().ref().child('game').child(room_key).child('status');
+
+    dbGameClosed.on('value', snap => {
+      if (snap.val() == 'CLOSED') {
+      window.location.href = '/rank/' + room_key
+      }
+    })
 
 
     // Function to calcaute seconds between the start of the game and current time.
@@ -105,23 +118,19 @@ Tries: {{counter}} -{{messagess}} {{number}}
         $("#minutes").html(pad(parseInt(sec / 60, 10)));
       }, 1000);
     }
-    // Trigger for timer once player submits his first guess , timestamp
-    // gets stored into local storage
-    $("#guessForm").submit(function () {
-      var timer = localStorage.getItem("sec");
-      if (timer != null) {
-      } else {
-        localStorage.setItem("sec", Date.now());
-      }
-    });
-
 
     // Checking if player already started his game , if so loading up HTML to remove
     // one second delay inside the runTimer function and starting the function itself.
-    if (sec !== null) {
+    if (sec === null) {
       $("#seconds").html(pad(++sec % 60));
       $("#minutes").html(pad(parseInt(sec / 60, 10)));
       runTimer();
+      localStorage.setItem('sec', Date.now())
+    }
+    else {
+      $("#seconds").html(pad(++sec % 60));
+      $("#minutes").html(pad(parseInt(sec / 60, 10)));
+      runTimer()
     }
   });
 

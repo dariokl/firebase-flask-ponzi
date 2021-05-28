@@ -63,8 +63,16 @@ class User():
                 {"end_time": 9999})
 
     def expel_player(self, user_key):
+        # Getting all the players that have postion 
+        player_ahead = db.child('game').child(self.room_key).child('players').order_by_child('position').get().val()
+        # Ranking player one second behind the last player that has finished the game 
+        # So we keep expeled players behind the players that solve the puzzle
+        end_timer = []
+        for player in player_ahead:
+            if player != None and player.get('end_time'):
+                end_timer.append(player['end_time'])
         db.child('game').child(self.room_key).child('players').child(user_key).update(
-            {"end_time": 9999})
+            {"end_time": max(end_timer) + 1 })
 
 
     def set_position(self, db, room_key):

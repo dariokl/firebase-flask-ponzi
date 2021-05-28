@@ -120,6 +120,7 @@ def ponzi():
     # Using session objects to retrieve the current use , session objects are initialized on /register route.
     current_user = crud_user.current_user(
         db, session['email'], session['room_key'])
+    crud_user.set_timer(db, time.time())
 
     # Using the number that is generated and added to session on /register.
     number_to_guess = session['number']
@@ -136,7 +137,6 @@ def ponzi():
         return count
 
     if form.validate_on_submit() and request.method == 'POST':
-        crud_user.set_timer(db, time.time())
         # Moving the amount of guesses
         if session['guesses'] <= 1:
             crud_user.end_timer(db, time.time(), failed=True)
@@ -184,7 +184,7 @@ def ponzi():
         return redirect(url_for('ponzi.ponzi'))
 
     return render_template('game.html', number=number_to_guess, counter=session['guesses'], form=form,
-                           notification=zip(session['messages'], session['guess']))
+                           notification=zip(session['messages'], session['guess']), room_key=session['room_key'])
 
 
 @view.route('/rank/<room_key>')
